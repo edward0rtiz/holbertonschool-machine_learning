@@ -2,9 +2,6 @@
 """function to slice matrix along specific values"""
 
 
-import numpy as np
-
-
 def np_slice(matrix, axes={}):
     """ slice matrix along specific value
 
