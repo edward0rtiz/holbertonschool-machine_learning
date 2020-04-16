@@ -15,7 +15,7 @@ def np_slice(matrix, axes={}):
         the slice mat: slice_mat
 
     """
-    slice_mat = [slice(None)] * matrix.ndim
+    slice_mat = [slice(None, None, None)] * matrix.ndim
     for k, v in sorted(axes.items()):
         slice_val = slice(*v)
         slice_mat[k] = slice_val
