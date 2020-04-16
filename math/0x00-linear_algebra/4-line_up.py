@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Transpose function to check a new matrix transposed"""
+""" function to add two arrays elements-wise"""
 
 
 def add_arrays(arr1, arr2):
@@ -9,7 +9,7 @@ def add_arrays(arr1, arr2):
         arr1, arr2: Given arrays
 
     Return:
-        the sum of arrays: Transposed matrix
+        the sum of arrays: new matrix
 
     """
     if len(arr1) != len(arr2):
