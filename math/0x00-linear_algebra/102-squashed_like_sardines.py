@@ -18,7 +18,10 @@ def rec_matrix(mat1, mat2, depth, axis=0):
     else:
         for x in range(len(mat1)):
             if type(mat1[x]) == list:
-                new_mat = [sum(x) for x in zip(rec_matrix(mat1[x], mat2[x], depth + 1, axis))]
+                new_mat = [sum(x) for x in zip(rec_matrix(mat1[x],
+                                                          mat2[x],
+                                                          depth + 1,
+                                                          axis))]
             return new_mat
 
 
@@ -29,4 +32,3 @@ def cat_matrices(mat1, mat2, axis=0):
         depth = 0
         new_mat = rec_matrix(mat1, mat2, depth, axis)
         return new_mat
-
