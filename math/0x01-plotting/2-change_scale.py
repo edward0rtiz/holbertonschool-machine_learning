@@ -10,7 +10,7 @@ y = np.exp((r / t) * x)
 # your code here
 plt.xlabel('Time (years)')
 plt.ylabel('Fraction Remaining')
-plt.title("Exponential decay of C-14")
+plt.title("Exponential Decay of C-14")
 plt.yscale("log")
 plt.xlim(0, 28650)
 plt.plot(x, y)
