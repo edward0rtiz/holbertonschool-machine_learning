@@ -61,7 +61,7 @@ At the end of this project, you are expected to be able to explain to anyone, wi
 ![](https://raw.githubusercontent.com/edward0rtiz/holbertonschool-machine_learning/master/math/0x01-plotting/plots/two.png)
 
 #### Plot multiple graph in one figure
-![]()
+![](https://raw.githubusercontent.com/edward0rtiz/holbertonschool-machine_learning/master/math/0x01-plotting/plots/Figure_1.png)
 
 #### Plot a stacked bar graph
 ![](https://raw.githubusercontent.com/edward0rtiz/holbertonschool-machine_learning/master/math/0x01-plotting/plots/bars.png)
