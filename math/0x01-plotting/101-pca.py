@@ -23,5 +23,3 @@ ax.set_zlabel("U3")
 ax.scatter(xs=pca_data[:, 0], ys=pca_data[:, 1], zs=pca_data[:, 2],
            c=labels, cmap=plt.cm.plasma)
 plt.show()
-
-
