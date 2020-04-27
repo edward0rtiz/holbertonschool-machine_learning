@@ -9,6 +9,10 @@ def poly_derivative(poly):
         return None
     elif not poly:
         return None
+    elif len(poly) == 0:
+        return None
+    elif len(poly) == 1:
+        return [0]
     else:
         power = [i for i in range(len(poly))]
         df = [power[x] * poly[x] for x in range(1, len(poly))]
