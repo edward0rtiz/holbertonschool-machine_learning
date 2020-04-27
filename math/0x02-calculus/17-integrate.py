@@ -13,7 +13,7 @@ def poly_integral(poly, C=0):
         return None
     elif len(poly) == 1:
         return [0]
-    elif type(C)is not int:
+    elif type(C) is not int:
         return None
     elif poly == [0]:
         return [C]
@@ -21,6 +21,6 @@ def poly_integral(poly, C=0):
         integral = []
         integral.append(C)
         for i in range(len(poly)):
-            x = poly[i]/(i + 1)
-            integral.append(x if x.is_integer() else x)
+            x = poly[i] / (i + 1)
+            integral.append(int(x) if x.is_integer() else x)
         return integral
