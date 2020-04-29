@@ -7,7 +7,7 @@ of continous variables and discretes
 
 class Normal():
     """
-    Type class normal distrubition
+    Type class normal distribution
     """
 
     pi = 3.1415926536
@@ -64,7 +64,7 @@ class Normal():
 
     def cdf(self, x):
         """
-        param x: x parametr of the function
+        param x: x parameter of the function
         return:  Cumulative distribution Function
         """
         xa = (x - self.mean) / ((2 ** 0.5) * self.stddev)
