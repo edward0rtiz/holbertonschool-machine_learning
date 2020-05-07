@@ -75,7 +75,7 @@ class Neuron():
             Y: Y hat, slope
             A: Activated neuron output
 
-        Returns:
+        Returns: Cost value, efficiency when C = 0
 
         """
 
