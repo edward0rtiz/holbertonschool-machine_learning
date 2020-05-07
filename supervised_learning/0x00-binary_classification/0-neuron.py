@@ -13,7 +13,7 @@ class Neuron():
         Args:
             nx: Type int the number of n inputs into the ANN
         """
-        if nx is not int:
+        if type(nx) is not int:
             raise TypeError("nx must be an integer")
         if nx < 1:
             raise ValueError("nx must be a positive integer")
