@@ -117,7 +117,7 @@ class NeuralNetwork():
         sigmoid_1 = 1 / (1 + np.exp(-Z1))
         self.__A1 = sigmoid_1
         Z2 = np.matmul(self.__W2, self.__A1) + self.__b2
-        sigmoid_2 = 1 / (1 + np.exp(-Z1))
+        sigmoid_2 = 1 / (1 + np.exp(-Z2))
         self.__A2 = sigmoid_2
 
         return self.__A1, self.__A2
