@@ -21,6 +21,6 @@ class NeuralNetwork():
         self.W1 = np.random.rand(nx, nodes).reshape(nodes, nx)
         self.b1 = np.zeros(nodes).reshape(nodes, 1)
         self.A1 = 0
-        self.W2 = np.random.rand(nodes).reshape(nodes, 1)
+        self.W2 = np.random.rand(nodes).reshape(1, nodes)
         self.b2 = 0
         self.A2 = 0
