@@ -105,7 +105,7 @@ class DeepNeuralNetwork():
         """
 
         m = Y.shape[1]
-        C = (-1 / m) * np.sum(Y * np.log(A) + (1-Y) * (np.log(1.0000001 - A)))
+        C = (-1 / m) * np.sum(Y * np.log(A) + (1 - Y) * (np.log(1.0000001 - A)))
         return C
 
     def evaluate(self, X, Y):
@@ -139,10 +139,11 @@ class DeepNeuralNetwork():
         """
 
         m = Y.shape[1]
+        weights = self.__weights.copy()
         A2 = self.__cache["A" + str(self.__L - 1)]
         A3 = self.__cache["A" + str(self.__L)]
-        W3 = self.__weights["W" + str(self.__L)]
-        b3 = self.__weights["b" + str(self.__L)]
+        W3 = weights["W" + str(self.__L)]
+        b3 = weights["b" + str(self.__L)]
         dZ_input = {}
         dZ3 = A3 - Y  # derivative Z3
         dZ_input["dz" + str(self.__L)] = dZ3
@@ -153,12 +154,10 @@ class DeepNeuralNetwork():
         # grad of the loss with respect to b
         db3 = (1 / m) * np.sum(dZ3, axis=1, keepdims=True)
 
-        weights = self.__weights
-        weights["W" + str(self.__L)] = W3 - (alpha * dW3).T
-        weights["b" + str(self.__L)] = b3 - (alpha * db3)
+        self.__weights["W" + str(self.__L)] = W3 - (alpha * dW3).T
+        self.__weights["b" + str(self.__L)] = b3 - (alpha * db3)
 
         for lay in range(self.__L - 1, 0, -1):
-            weights = self.__weights
             cache = self.__cache
             Aa = cache["A" + str(lay)]
             Ap = cache["A" + str(lay - 1)]
@@ -171,5 +170,5 @@ class DeepNeuralNetwork():
             dW = (1 / m) * np.matmul(Ap, dZ.T)
             db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
             dZ_input["dz" + str(lay)] = dZ
-            weights["W" + str(lay)] = Wa - (alpha * dW).T
-            weights["b" + str(lay)] = ba - (alpha * db)
+            self.__weights["W" + str(lay)] = Wa - (alpha * dW).T
+            self.__weights["b" + str(lay)] = ba - (alpha * db)
