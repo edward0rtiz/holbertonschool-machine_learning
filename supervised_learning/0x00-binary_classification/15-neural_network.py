@@ -215,22 +215,24 @@ class NeuralNetwork():
         steps = 0
         c_ax = np.zeros(iterations + 1)
 
-        for i in range(iterations):
+        temp_cost = []
+        temp_iterations = []
+        for i in range(iterations + 1):
             self.forward_prop(X)
             cost = self.cost(Y, self.__A2)
-            if i == iterations and step:
-                print("Cost after {} iterations: {}".format(i, cost))
-                steps += step
-            if verbose is True:
-                print("Cost after {} iterations: {}".format(i, cost))
+            if i % step == 0 or i == iterations:
+                temp_cost.append(cost)
+                temp_iterations.append(i)
+                if verbose is True:
+                    print("Cost after {} iterations: {}".format(i, cost))
             if i < iterations:
                 self.gradient_descent(X, Y, self.__A1, self.__A2, alpha)
-            if graph is True:
-                c_ax[i] = cost
+
+
         if graph is True:
             plt.title("Training Cost")
             plt.xlabel("iteration")
             plt.ylabel("cost")
-            plt.plot(np.arange(0, iterations + 1), c_ax)
+            plt.plot(temp_iterations, temp_cost)
             plt.show()
         return self.evaluate(X, Y)
