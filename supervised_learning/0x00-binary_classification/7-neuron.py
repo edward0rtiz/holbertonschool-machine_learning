@@ -151,14 +151,12 @@ class Neuron():
         steps = 0
         c_ax = np.zeros(iterations + 1)
 
-        for i in range(iterations):
+        for i in range(iterations + 1):
             self.forward_prop(X)
             cost = self.cost(Y, self.__A)
-            if i == iterations and step:
+            if (i == steps or i == iterations) and step:
                 print("Cost after {} iterations: {}".format(i, cost))
                 steps += step
-            if verbose is True:
-                print("Cost after {} iterations: {}".format(i, cost))
             if i < iterations:
                 self.gradient_descent(X, Y, self.__A, alpha)
             if graph is True:
