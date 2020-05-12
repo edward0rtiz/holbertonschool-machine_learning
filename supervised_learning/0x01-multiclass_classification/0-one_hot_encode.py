@@ -19,6 +19,8 @@ def one_hot_encode(Y, classes):
         return None
     elif type(classes) is not int:
         return None
+    elif not isinstance(Y, np.array):
+        return None
     else:
         ohe = np.zeros((classes, Y.shape[0]))
         ohe[Y, np.arange(Y.size)] = 1
