@@ -21,6 +21,8 @@ def one_hot_encode(Y, classes):
         return None
     elif not isinstance(Y, np.ndarray):
         return None
+    elif classes < np.amax(Y):
+        return None
     else:
         ohe = np.zeros((classes, Y.shape[0]))
         ohe[Y, np.arange(Y.size)] = 1
