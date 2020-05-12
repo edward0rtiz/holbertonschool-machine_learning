@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ Script to converts a one-hot matrix into vector
     of labels
 """
