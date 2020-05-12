@@ -15,7 +15,7 @@ def one_hot_encode(Y, classes):
     Returns: np.array one_hot_encode matrix
 
     """
-    if Y.size is 0:
+    if len(Y) == 0:
         return None
     elif type(classes) is not int:
         return None
@@ -24,6 +24,6 @@ def one_hot_encode(Y, classes):
     elif classes < np.amax(Y):
         return None
 
-    ohe = np.zeros((classes, Y.shape[0]))
-    ohe[Y, np.arange(Y.size)] = 1
+    ohe = np.zeros((classes, len(Y)))
+    ohe[Y, np.arange(len(Y))] = 1
     return ohe
