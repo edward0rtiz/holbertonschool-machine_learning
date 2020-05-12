@@ -18,5 +18,8 @@ def one_hot_decode(one_hot):
     """
     if not isinstance(one_hot, np.ndarray):
         return None
-    else:
-        return np.argmax(one_hot, axis=0)
+    elif len(one_hot) == 0:
+        return None
+    elif len(one_hot.shape) != 2:
+        return None
+    return np.argmax(one_hot, axis=0)
