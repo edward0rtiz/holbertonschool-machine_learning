@@ -162,29 +162,50 @@ class DeepNeuralNetwork():
         Returns: gradient descent bias + adjusted weights
 
         """
+        m = Y.shape[1]
+        dz = {}
+        dW = {}
+        db = {}
 
-        for i in reversed(range(self.__L + 1)):
-            m = Y.shape[1]
-            wei = "W{}".format(i + 1)  # weight
-            actn = "A{}".format(i + 1)  # activated neuron
-            bias = "b{}".format(i + 1)  # bias
-            A = cache[actn]
-            if i == self.__L - 1:
-                dZ = A - Y
-                dW = self.__weights[wei]
+        for la in reversed(range(1, self.__L + 1)):
+            A = cache["A{}".format(la)]
+            A_prev = cache["A{}".format(la - 1)]
+
+            # 3
+            if la == self.__L:
+                kdz = "dz{}".format(la)
+                kdW = "dW{}".format(la)
+                kdb = "db{}".format(la)
+
+                dz[kdz] = A - Y
+                dW[kdW] = np.matmul(dz[kdz], A_prev.T) / m
+                db[kdb] = dz[kdz].sum(axis=1, keepdims=True) / m
             else:
+                # 2 - 1
+                kdz_n = "dz{}".format(la + 1)
+                kdz_c = "dz{}".format(la)
+                kdW_n = "dW{}".format(la + 1)
+                kdW = "dW{}".format(la)
+                kdb_n = "db{}".format(la + 1)
+                kdb = "db{}".format(la)
+                kW = 'W{}'.format(la + 1)
+                kb = 'b{}'.format(la + 1)
+
+                W = self.__weights[kW]
                 if self.__activation == 'sig':
-                    gd = A * (1 - A)
+                    g = A * (1 - A)
                 elif self.__activation == 'tanh':
-                    gd = 1 - (A * A)
-                lay1 = np.matmul(dW.T, dZ)
-                dZ = lay1 * gd
-                dW = self.__weights[wei]
-            dW3 = np.matmul(cache["A{}".format(i)], dZ.T) / m
-            # grad of the loss with respect to b
-            db3 = np.sum(dZ, axis=1, keepdims=True) / m
-            self.__weights[wei] = self.__weights[wei] - (alpha * dW3.T)
-            self.__weights[bias] = self.__weights[bias] - (alpha * db3)
+                    g = 1 - (A * A)
+                dz[kdz_c] = np.matmul(W.T, dz[kdz_n]) * g
+                dW[kdW] = np.matmul(dz[kdz_c], A_prev.T) / m
+                db[kdb] = dz[kdz_c].sum(axis=1, keepdims=True) / m
+
+                self.__weights[kW] -= alpha * dW[kdW_n]
+                self.__weights[kb] -= alpha * db[kdb_n]
+
+                if la == 1:
+                    self.__weights['W1'] -= alpha * dW['dW1']
+                    self.__weights['b1'] -= alpha * db['db1']
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
