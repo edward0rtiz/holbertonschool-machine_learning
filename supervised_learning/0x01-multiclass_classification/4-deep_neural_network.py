@@ -163,7 +163,7 @@ class DeepNeuralNetwork():
 
         """
 
-        for i in reversed(range(self.__L)):
+        for i in reversed(range(self.__L - 1)):
             m = Y.shape[1]
             wei = "W{}".format(i + 1)  # weight
             actn = "A{}".format(i + 1)  # activated neuron
