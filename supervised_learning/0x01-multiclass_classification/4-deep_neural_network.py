@@ -164,38 +164,30 @@ class DeepNeuralNetwork():
 
         m = Y.shape[1]
         weights = self.__weights.copy()
-        A2 = self.__cache["A" + str(self.__L - 1)]
-        A3 = self.__cache["A" + str(self.__L)]
-        W3 = weights["W" + str(self.__L)]
-        b3 = weights["b" + str(self.__L)]
-        dZ_input = {}
-        dZ3 = A3 - Y  # derivative Z3
-        dZ_input["dz" + str(self.__L)] = dZ3
+        activation = self.__activation
+        for i in reversed(range(self.__L)):
+            m = Y.shape[1]
+            wei = "W{}".format(i + 1)  # weight
+            actn = "A{}".format(i + 1)  # activated neuron
+            bias = "b{}".format(i + 1)  # bias
 
-        # grad of the loss with respect to w
-        dW3 = (1 / m) * np.matmul(A2, dZ3.T)
-
-        # grad of the loss with respect to b
-        db3 = (1 / m) * np.sum(dZ3, axis=1, keepdims=True)
-
-        self.__weights["W" + str(self.__L)] = W3 - (alpha * dW3).T
-        self.__weights["b" + str(self.__L)] = b3 - (alpha * db3)
-
-        for lay in range(self.__L - 1, 0, -1):
-            cache = self.__cache
-            Aa = cache["A" + str(lay)]
-            Ap = cache["A" + str(lay - 1)]
-            Wa = weights["W" + str(lay)]
-            Wn = weights["W" + str(lay + 1)]
-            ba = weights["b" + str(lay)]
-            dZ1 = np.matmul(Wn.T, dZ_input["dz" + str(lay + 1)])
-            dZ2 = Aa * (1 - Aa)
-            dZ = dZ1 * dZ2
-            dW = (1 / m) * np.matmul(Ap, dZ.T)
-            db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
-            dZ_input["dz" + str(lay)] = dZ
-            self.__weights["W" + str(lay)] = Wa - (alpha * dW).T
-            self.__weights["b" + str(lay)] = ba - (alpha * db)
+            A = cache[actn]
+            if i == self.__L - 1:
+                dZ = A - Y
+                dW = self.__weights[wei]
+            else:
+                if activation == 'sig':
+                    gd = A * (1 - A)
+                elif activation == 'tanh':
+                    gd = 1 - (A * A)
+                lay1 = np.matmul(dW.T, dZ)
+                dZ = lay1 * gd
+                dW = self.__weights[wei]
+            dW3 = np.matmul(cache["A{}".format(i)], dZ.T) / m
+            # grad of the loss with respect to b
+            db3 = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
+            self.__weights[wei] = self.__weights[wei] - (alpha * dW3.T)
+            self.__weights[bias] = self.__weights[bias] - (alpha * db3)
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
