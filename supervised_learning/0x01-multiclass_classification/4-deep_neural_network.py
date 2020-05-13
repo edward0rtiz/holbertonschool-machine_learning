@@ -107,13 +107,14 @@ class DeepNeuralNetwork():
             if lay == self.__L - 1:
                 t = np.exp(Z)
                 # softmax activation
-                cache["A" + str (lay + 1)] = (t / np.sum(t, axis=0, keepdims=True))
+                cache["A" + str(lay + 1)] = (t / np.sum(
+                    t, axis=0, keepdims=True))
             else:
                 if activ == 'sig':
                     cache["A" + str(lay + 1)] = 1 / (1 + np.exp(-Z))
                 else:
-                    cache["A" + str (lay + 1)] = np.tanh(Z)
-        return cache["A" + str (lay + 1)], cache
+                    cache["A" + str(lay + 1)] = np.tanh(Z)
+        return cache["A" + str(lay + 1)], cache
 
     def cost(self, Y, A):
         """
@@ -182,7 +183,8 @@ class DeepNeuralNetwork():
                 We = (tW["W" + str(i + 1)] - (alpha * dW).T)
             else:
                 We = (tW["W" + str(i + 1)] - (alpha * dW))
-            self.__weights["b" + str(i + 1)] = tW["b" + str(i + 1)] - (alpha * db3)
+            self.__weights["b" + str(i + 1)] = tW["b" + str(i + 1)] - (
+                    alpha * db3)
             dZ2 = dZ
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
