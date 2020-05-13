@@ -37,7 +37,7 @@ class DeepNeuralNetwork():
         self.__weights = {}
         self.__activation = activation
         for lay in range(self.L):
-            if layers[lay] < 1 or type(layers[lay]) is not int:
+            if layers[lay] <= 0 or type(layers[lay]) is not int:
                 raise TypeError("layers must be a list of positive integers")
             self.__weights["b" + str(lay + 1)] = np.zeros((layers[lay], 1))
             if lay == 0:
@@ -107,15 +107,13 @@ class DeepNeuralNetwork():
             if lay == self.__L - 1:
                 t = np.exp(Z)
                 # softmax activation
-                activation = t / t.sum(axis=0, keepdims=True)
+                cache["A" + str (lay + 1)] = (t / np.sum(t, axis=0, keepdims=True))
             else:
                 if activ == 'sig':
-                    activation = 1 / (1 + np.exp(-Z))
+                    cache["A" + str(lay + 1)] = 1 / (1 + np.exp(-Z))
                 else:
-                    activation = np.tanh(Z)
-
-            cache["A" + str(self.__L)] = activation
-        return activation, cache
+                    cache["A" + str (lay + 1)] = np.tanh(Z)
+        return cache["A" + str (lay + 1)], cache
 
     def cost(self, Y, A):
         """
@@ -142,12 +140,12 @@ class DeepNeuralNetwork():
         Returns: The neuron prediction and the cost
                 of the network
         """
-
+        self.forward_prop(X)
         cache = self.__cache
-        A, cache = self.forward_prop(X)
-        cost = self.cost(Y, A)
-        prediction = np.where(A >= 0.5, 1, 0)  # broa
-        # dcasting
+        cost = self.cost(Y, cache["A" + str(self.__L)])
+        mc = np.amax(cache["A" + str(self.__L)], axis=0)
+        # broadcasting
+        prediction = np.where(cache["A" + str(self.__L)] == mc, 1, 0)
         return prediction, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):
@@ -163,49 +161,29 @@ class DeepNeuralNetwork():
 
         """
         m = Y.shape[1]
-        dz = {}
-        dW = {}
-        db = {}
-
-        for la in reversed(range(1, self.__L + 1)):
-            A = cache["A{}".format(la)]
-            A_prev = cache["A{}".format(la - 1)]
-
-            # 3
-            if la == self.__L:
-                kdz = "dz{}".format(la)
-                kdW = "dW{}".format(la)
-                kdb = "db{}".format(la)
-
-                dz[kdz] = A - Y
-                dW[kdW] = np.matmul(dz[kdz], A_prev.T) / m
-                db[kdb] = dz[kdz].sum(axis=1, keepdims=True) / m
+        tW = self.__weights.copy()
+        for i in reversed(range(self.__L)):
+            A = self.__cache["A" + str(i + 1)]
+            We = self.__weights["W" + str(i + 1)]
+            if i == self.__L - 1:
+                dZ = self.__cache["A" + str(i + 1)] - Y
+                dW = np.matmul(self.__cache["A" + str(i)], dZ.T) / m
             else:
-                # 2 - 1
-                kdz_n = "dz{}".format(la + 1)
-                kdz_c = "dz{}".format(la)
-                kdW_n = "dW{}".format(la + 1)
-                kdW = "dW{}".format(la)
-                kdb_n = "db{}".format(la + 1)
-                kdb = "db{}".format(la)
-                kW = 'W{}'.format(la + 1)
-                kb = 'b{}'.format(la + 1)
-
-                W = self.__weights[kW]
+                dW2 = np.matmul(tW["W" + str(i + 2)].T, dZ2)
                 if self.__activation == 'sig':
-                    g = A * (1 - A)
+                    gd = A * (1 - A)
                 elif self.__activation == 'tanh':
-                    g = 1 - (A * A)
-                dz[kdz_c] = np.matmul(W.T, dz[kdz_n]) * g
-                dW[kdW] = np.matmul(dz[kdz_c], A_prev.T) / m
-                db[kdb] = dz[kdz_c].sum(axis=1, keepdims=True) / m
-
-                self.__weights[kW] -= alpha * dW[kdW_n]
-                self.__weights[kb] -= alpha * db[kdb_n]
-
-                if la == 1:
-                    self.__weights['W1'] -= alpha * dW['dW1']
-                    self.__weights['b1'] -= alpha * db['db1']
+                    gd = 1 - (A ** 2)
+                dZ = dW2 * gd
+                dW = np.matmul(dZ, self.__cache["A" + str(i)].T) / m
+            # grad of the loss with respect to b
+            db3 = np.sum(dZ, axis=1, keepdims=True) / m
+            if i == self.__L - 1:
+                We = (tW["W" + str(i + 1)] - (alpha * dW).T)
+            else:
+                We = (tW["W" + str(i + 1)] - (alpha * dW))
+            self.__weights["b" + str(i + 1)] = tW["b" + str(i + 1)] - (alpha * db3)
+            dZ2 = dZ
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
