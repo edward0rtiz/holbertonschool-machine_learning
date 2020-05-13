@@ -163,29 +163,26 @@ class DeepNeuralNetwork():
 
         """
 
-
         for i in reversed(range(self.__L)):
-            activation = self.__activation
             m = Y.shape[1]
+            A = cache[actn]
             wei = "W{}".format(i + 1)  # weight
             actn = "A{}".format(i + 1)  # activated neuron
             bias = "b{}".format(i + 1)  # bias
-
-            A = cache[actn]
             if i == self.__L - 1:
                 dZ = A - Y
                 dW = self.__weights[wei]
             else:
-                if activation == 'sig':
+                if self.__activation == 'sig':
                     gd = A * (1 - A)
-                elif activation == 'tanh':
+                elif self.__activation == 'tanh':
                     gd = 1 - (A * A)
                 lay1 = np.matmul(dW.T, dZ)
                 dZ = lay1 * gd
                 dW = self.__weights[wei]
             dW3 = np.matmul(cache["A{}".format(i)], dZ.T) / m
             # grad of the loss with respect to b
-            db3 = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
+            db3 = np.sum(dZ, axis=1, keepdims=True) / m
             self.__weights[wei] = self.__weights[wei] - (alpha * dW3.T)
             self.__weights[bias] = self.__weights[bias] - (alpha * db3)
 
