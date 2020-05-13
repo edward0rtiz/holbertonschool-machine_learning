@@ -165,10 +165,10 @@ class DeepNeuralNetwork():
 
         for i in reversed(range(self.__L)):
             m = Y.shape[1]
-            A = cache[actn]
             wei = "W{}".format(i + 1)  # weight
             actn = "A{}".format(i + 1)  # activated neuron
             bias = "b{}".format(i + 1)  # bias
+            A = cache[actn]
             if i == self.__L - 1:
                 dZ = A - Y
                 dW = self.__weights[wei]
