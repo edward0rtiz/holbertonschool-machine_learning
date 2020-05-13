@@ -176,8 +176,8 @@ class DeepNeuralNetwork():
                     gd = 1 - (A * A)
                 dZ = dW2 * gd
                 dW = np.matmul(dZ, self.__cache["A" + str(i)].T) / m
-            # grad of the loss with respect to b
-            db3 = np.sum(dZ, axis=1, keepdims=True) / m
+                # grad of the loss with respect to b
+                db3 = np.sum(dZ, axis=1, keepdims=True) / m
             if i == self.__L - 1:
                 self.__weights["W" + str(i + 1)] = (tW["W" +
                                                        str(i + 1)] -
