@@ -105,16 +105,17 @@ class DeepNeuralNetwork():
             Za = np.matmul(weights["W" + str(lay + 1)], cache["A" + str(lay)])
             Z = Za + weights["b" + str(lay + 1)]
             if lay == self.__L - 1:
-                p1 = np.exp(Z)
+                t = np.exp(Z)
                 # softmax activation
-                self.__cache["A" + str(lay + 1)] = (p1 / np.sum(
-                    p1, axis=0, keepdims=True))
+                activation = t / t.sum(axis=0, keepdims=True)
             else:
                 if activ == 'sig':
-                    cache["A" + str(lay + 1)] = 1 / (1 + np.exp(-Z))
+                    activation = 1 / (1 + np.exp(-Z))
                 else:
-                    cache["A" + str(lay + 1)] = np.tanh(Z)
-        return cache["A" + str(self.__L)], cache
+                    activation = np.tanh(Z)
+
+            cache["A" + str(self.__L)] = activation
+        return activation, cache
 
     def cost(self, Y, A):
         """
@@ -162,10 +163,9 @@ class DeepNeuralNetwork():
 
         """
 
-        m = Y.shape[1]
-        weights = self.__weights.copy()
-        activation = self.__activation
+
         for i in reversed(range(self.__L)):
+            activation = self.__activation
             m = Y.shape[1]
             wei = "W{}".format(i + 1)  # weight
             actn = "A{}".format(i + 1)  # activated neuron
