@@ -172,8 +172,7 @@ class DeepNeuralNetwork():
                 dW2 = np.matmul(tW["W" + str(i + 2)].T, dZ2)
                 if self.__activation == 'sig':
                     gd = A * (1 - A)
-                else:
-                #elif self.__activation == 'tanh':
+                elif self.__activation == 'tanh':
                     gd = 1 - (A * A)
                 dZ = dW2 * gd
                 dW = np.matmul(dZ, self.__cache["A" + str(i)].T) / m
