@@ -165,7 +165,6 @@ class DeepNeuralNetwork():
         tW = self.__weights.copy()
         for i in reversed(range(self.__L)):
             A = self.__cache["A" + str(i + 1)]
-            We = self.__weights["W" + str(i + 1)]
             if i == self.__L - 1:
                 dZ = self.__cache["A" + str(i + 1)] - Y
                 dW = np.matmul(self.__cache["A" + str(i)], dZ.T) / m
@@ -180,9 +179,13 @@ class DeepNeuralNetwork():
             # grad of the loss with respect to b
             db3 = np.sum(dZ, axis=1, keepdims=True) / m
             if i == self.__L - 1:
-                We = (tW["W" + str(i + 1)] - (alpha * dW).T)
+                self.__weights["W" + str(i + 1)] = (tW["W" +
+                                                       str(i + 1)] -
+                                                    (alpha * dW).T)
             else:
-                We = (tW["W" + str(i + 1)] - (alpha * dW))
+                self.__weights["W" + str(i + 1)] = (tW["W" +
+                                                       str(i + 1)] -
+                                                    (alpha * dW))
             self.__weights["b" + str(i + 1)] = tW["b" + str(i + 1)] - (
                     alpha * db3)
             dZ2 = dZ
