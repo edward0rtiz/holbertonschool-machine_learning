@@ -173,7 +173,7 @@ class DeepNeuralNetwork():
                 if self.__activation == 'sig':
                     gd = A * (1 - A)
                 elif self.__activation == 'tanh':
-                    gd = 1 - (A ** 2)
+                    gd = 1 - (A * A)
                 dZ = dW2 * gd
                 dW = np.matmul(dZ, self.__cache["A" + str(i)].T) / m
             # grad of the loss with respect to b
