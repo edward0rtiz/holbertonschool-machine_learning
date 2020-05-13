@@ -182,7 +182,7 @@ class DeepNeuralNetwork():
                 self.__weights["W" + str(i + 1)] = (tW["W" +
                                                        str(i + 1)] -
                                                     (alpha * dW).T)
-            if i == 1:
+            else:
                 self.__weights["W" + str(i + 1)] = (tW["W" +
                                                        str(i + 1)] -
                                                     (alpha * dW))
