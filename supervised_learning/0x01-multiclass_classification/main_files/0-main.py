@@ -4,7 +4,7 @@ import numpy as np
 
 oh_encode = __import__('0-one_hot_encode').one_hot_encode
 
-lib = np.load('../data/MNIST.npz')
+lib = np.load('../../data/MNIST.npz')
 Y = lib['Y_train'][:10]
 
 print(Y)
