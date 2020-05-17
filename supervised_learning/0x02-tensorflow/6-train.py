@@ -13,6 +13,22 @@ forward_prop = __import__('2-forward_prop').forward_prop
 def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
           activations, alpha, iterations,
           save_path="/tmp/model.ckpt"):
+    """
+
+    Args:
+        X_train: training input data (nparray)
+        Y_train: training labels data (nparray)
+        X_valid: validation input data (nparray)
+        Y_valid: validation labels data (nparray)
+        layer_sizes: Number of nodes in each layer (list)
+        activations: Activation function in each layer (list)
+        alpha: learning rate
+        iterations: iteration number in the model
+        save_path: path in which the model is saved
+
+    Returns: Model trained in .ckpt extension
+
+    """
 
     # tensors for input
     x, y = create_placeholders(X_train.shape[1], Y_train.shape[1])
