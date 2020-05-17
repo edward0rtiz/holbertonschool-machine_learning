@@ -35,4 +35,4 @@ This repository used the following main stack:
 | [Pycharm Pro](https://www.jetbrains.com/pycharm/)|
 | [jupyter](https://jupyter.org/)|
 | [VS Code](https://code.visualstudio.com/)|
-| [VS Code](https://code.visualstudio.com/)|
+| [nimblebox](https://nimblebox.ai/)|
