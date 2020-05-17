@@ -9,7 +9,7 @@ def calculate_accuracy(y, y_pred):
     method to calculate the accuracy of a prediction in a DNN
     Args:
         y: input data type label in a placeholder
-        y_pred: type tenser that contains the DNN prediction
+        y_pred: type tensor that contains the DNN prediction
 
     Returns: Prediction accuracy
 
