@@ -6,7 +6,7 @@ import tensorflow as tf
 
 def create_layer(prev, n, activation):
     """
-
+    method to create a TF layer
     Args:
         prev: tensor of the previous layer
         n: n nodes created
