@@ -52,6 +52,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
     # launch the graph and train saving the model every 100 ops
     sess = tf.Session()
     sess.run(init)
+    # Using the context manager
     for step in range(iterations + 1):
         t_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
         t_acc = sess.run(accuracy, feed_dict={x: X_train, y: Y_train})
@@ -59,7 +60,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
         v_acc = sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})
         if step % 100 == 0:
             print("After {} iterations:".format(step))
-            print("\tTraining Cost:".format(t_cost))
+            print("\tTraining Cost: {}".format(t_cost))
             print("\tTraining Accuracy: {}".format(t_acc))
             print("\tValidation Cost: {}".format(v_cost))
             print("\tValidation Accuracy: {}".format(v_acc))
