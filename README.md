@@ -14,7 +14,7 @@
 | [math/0x03-probability](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/math/0x03-probability)| Python probability and statistics scripts| 
 | [supervised_learning/0x00-binary_classification](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x00-binary_classification)| Binary calssification scripts of Neural Networks and DNN using OOP| 
 | [supervised_learning/0x01-multiclass_classification](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x01-multiclass_classification)| Multiclass calssification of NN using OOP paradigm| 
-| [supervised_learning/0x02-tensroflow](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x02-tensroflow)| Tensor Flow scripts for binary and multiclass DNN models| 
+| [supervised_learning/0x02-tensorflow](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x02-tensorflow)| Tensor Flow scripts for binary and multiclass DNN models| 
 
 # Stack :books:
 
