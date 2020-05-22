@@ -49,7 +49,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         init = tf.global_variables_initializer()
         saver = tf.train.Saver()
         sess.run(init)
-        for epoch in range(epochs):
+        for epoch in range(epochs + 1):
             train_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
             train_accuracy = sess.run(accuracy,
                                       feed_dict={x: X_train, y: Y_train})
