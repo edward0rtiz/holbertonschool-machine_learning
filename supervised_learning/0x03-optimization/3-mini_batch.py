@@ -67,7 +67,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
 
                 for step_number in range(num_minibatches):
                     start = step_number * batch_size
-                    end = (step_number + 1) * batch_size
+                    end = (step_number * batch_size) + batch_size
                     if check == 0 and step_number == num_minibatches - 1:
                         x_minbatch = Xs[start::]
                         y_minbatch = Ys[start::]
