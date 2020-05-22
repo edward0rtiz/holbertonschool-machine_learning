@@ -69,13 +69,12 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                 Xs, Ys = shuffle_data(X_train, Y_train)
 
                 for step_number in range(num_minibatches):
+                    start = step_number * batch_size
+                    end = (step_number + 1) * batch_size
                     if check and step_number == num_minibatches - 1:
-                        start = step_number * batch_size
                         x_minbatch = Xs[start::]
                         y_minbatch = Ys[start::]
                     else:
-                        start = step_number * batch_size
-                        end = (step_number * batch_size) + batch_size
                         x_minbatch = Xs[start:end]
                         y_minbatch = Ys[start:end]
 
