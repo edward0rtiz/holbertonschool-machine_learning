@@ -3,7 +3,17 @@
     moving average of a data set
 """
 
+
 def moving_average(data, beta):
+    """
+    Function to calulate Exponential Moving Average
+    Args:
+        data: list of data to calculate the moving average of
+        beta: weight used for the moving average
+
+    Returns: list containing the moving averages of data
+
+    """
     Vt = 0
     EMA = []
     for i in range(len(data)):
