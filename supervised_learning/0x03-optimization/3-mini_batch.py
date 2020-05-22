@@ -63,14 +63,16 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
             print("\tValidation Cost: {}".format(valid_cost))
             print("\tValidation Accuracy: {}".format(valid_accuracy))
 
-            if i_epoch < epochs:
+            if epoch < epochs:
                 Xs, Ys = shuffle_data(X_train, Y_train)
                 for step_number in range(num_minibatches):
-                    x_minbatch = Xs[i * batch_size: (i + 1) * batch_size]
-                    y_minbatch = Ys[i * batch_size: (i + 1) * batch_size]
-                    if i == num_minibatches - 1:
-                        x_minbatch = Xs[i * batch_size:]
-                        y_minbatch = Ys[i * batch_size:]
+                    x_minbatch = Xs[step_number * batch_size:
+                                    (step_number + 1) * batch_size]
+                    y_minbatch = Ys[step_number * batch_size:
+                                    (step_number + 1) * batch_size]
+                    if step_number == num_minibatches - 1:
+                        x_minbatch = Xs[step_number * batch_size:]
+                        y_minbatch = Ys[step_number * batch_size:]
 
                     step_cost = sess.run(loss,
                                          feed_dict={x: x_minbatch,
