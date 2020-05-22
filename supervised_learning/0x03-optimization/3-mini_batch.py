@@ -80,6 +80,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                         print("\tStep {}:".format(i))
                         print("\t\tCost {}:".format(cost))
                         print("\t\tAccuracy {}:".format(acc))
-                    sess.run(train_op, feed_dict={x: x_minbatch, y: y_minbatch})
+                    sess.run(train_op,
+                             feed_dict={x: x_minbatch, y: y_minbatch})
         save_path = saver.save(sess, save_path)
     return save_path
