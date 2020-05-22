@@ -43,19 +43,21 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         m = X_train.shape[0]
         if (m % batch_size) == 0:
             num_minibatches = int(m / batch_size)
+            check = False
         else:
             num_minibatches = int(m / batch_size) + 1
+            check = True
 
         init = tf.global_variables_initializer()
         saver = tf.train.Saver()
         sess.run(init)
         for epoch in range(epochs + 1):
-            train_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
-            train_accuracy = sess.run(accuracy,
-                                      feed_dict={x: X_train, y: Y_train})
-            valid_cost = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
-            valid_accuracy = sess.run(accuracy,
-                                      feed_dict={x: X_valid, y: Y_valid})
+            feed_train = {x: X_train, y: Y_train}
+            feed_valid = {x: X_valid, y: Y_valid}
+            train_cost = sess.run(loss, feed_train)
+            train_accuracy = sess.run(accuracy, feed_train)
+            valid_cost = sess.run(loss, feed_valid)
+            valid_accuracy = sess.run(accuracy, feed_valid)
 
             print("After {} epochs:".format(epoch))
             print("\tTraining Cost: {}".format(train_cost))
@@ -65,14 +67,17 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
 
             if epoch < epochs:
                 Xs, Ys = shuffle_data(X_train, Y_train)
+
                 for step_number in range(num_minibatches):
-                    x_minbatch = Xs[step_number * batch_size:
-                                    (step_number + 1) * batch_size]
-                    y_minbatch = Ys[step_number * batch_size:
-                                    (step_number + 1) * batch_size]
-                    if step_number == num_minibatches - 1:
-                        x_minbatch = Xs[step_number * batch_size::]
-                        y_minbatch = Ys[step_number * batch_size::]
+                    if check and step_number == num_minibatches - 1:
+                        start = step_number * batch_size
+                        x_minbatch = Xs[start::]
+                        y_minbatch = Ys[start::]
+                    else:
+                        start = step_number * batch_size
+                        end = (step_number * batch_size) + batch_size
+                        x_minbatch = Xs[start:end]
+                        y_minbatch = Ys[start:end]
 
                     step_cost = sess.run(loss,
                                          feed_dict={x: x_minbatch,
