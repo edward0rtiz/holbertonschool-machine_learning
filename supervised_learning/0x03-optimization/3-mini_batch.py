@@ -49,37 +49,40 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         init = tf.global_variables_initializer()
         saver = tf.train.Saver()
         sess.run(init)
-        for i_epoch in range(epochs):
+        for epoch in range(epochs):
             train_cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
-            train_acc = sess.run(accuracy, feed_dict={x: X_train, y: Y_train})
+            train_accuracy = sess.run(accuracy,
+                                      feed_dict={x: X_train, y: Y_train})
             valid_cost = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
             valid_accuracy = sess.run(accuracy,
                                       feed_dict={x: X_valid, y: Y_valid})
 
-            print("After {} epochs:".format(i_epoch))
+            print("After {} epochs:".format(epoch))
             print("\tTraining Cost: {}".format(train_cost))
-            print("\tTraining Accuracy: {}".format(train_acc))
+            print("\tTraining Accuracy: {}".format(train_accuracy))
             print("\tValidation Cost: {}".format(valid_cost))
             print("\tValidation Accuracy: {}".format(valid_accuracy))
 
             if i_epoch < epochs:
                 Xs, Ys = shuffle_data(X_train, Y_train)
-                for i in range(num_minibatches):
+                for step_number in range(num_minibatches):
                     x_minbatch = Xs[i * batch_size: (i + 1) * batch_size]
                     y_minbatch = Ys[i * batch_size: (i + 1) * batch_size]
                     if i == num_minibatches - 1:
                         x_minbatch = Xs[i * batch_size:]
                         y_minbatch = Ys[i * batch_size:]
 
-                    cost = sess.run(loss,
-                                    feed_dict={x: x_minbatch, y: y_minbatch})
-                    acc = sess.run(accuracy,
-                                   feed_dict={x: x_minbatch, y: y_minbatch})
+                    step_cost = sess.run(loss,
+                                         feed_dict={x: x_minbatch,
+                                                    y: y_minbatch})
+                    step_accuracy = sess.run(accuracy,
+                                             feed_dict={x: x_minbatch,
+                                                        y: y_minbatch})
 
-                    if (i % 100 == 0) and (i is not 0):
-                        print("\tStep {}:".format(i))
-                        print("\t\tCost: {}".format(cost))
-                        print("\t\tAccuracy: {}".format(acc))
+                    if (step_number % 100 == 0) and (step_number is not 0):
+                        print("\tStep {}:".format(step_number))
+                        print("\t\tCost: {}".format(step_cost))
+                        print("\t\tAccuracy: {}".format(step_accuracy))
                     sess.run(train_op,
                              feed_dict={x: x_minbatch, y: y_minbatch})
         save_path = saver.save(sess, save_path)
