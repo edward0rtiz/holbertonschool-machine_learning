@@ -76,10 +76,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     acc = sess.run(accuracy,
                                    feed_dict={x: x_minbatch, y: y_minbatch})
 
-                if (i % 100 == 0) and (i is not 0):
-                    print("\tStep {}:".format(i))
-                    print("\t\tCost {}:".format(cost))
-                    print("\t\tAccuracy {}:".format(acc))
-                sess.run(train_op, feed_dict={x: x_minbatch, y: y_minbatch})
+                    if (i % 100 == 0) and (i is not 0):
+                        print("\tStep {}:".format(i))
+                        print("\t\tCost {}:".format(cost))
+                        print("\t\tAccuracy {}:".format(acc))
+                    sess.run(train_op, feed_dict={x: x_minbatch, y: y_minbatch})
         save_path = saver.save(sess, save_path)
     return save_path
