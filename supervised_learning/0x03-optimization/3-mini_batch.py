@@ -71,8 +71,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     y_minbatch = Ys[step_number * batch_size:
                                     (step_number + 1) * batch_size]
                     if step_number == num_minibatches - 1:
-                        x_minbatch = Xs[step_number * batch_size:]
-                        y_minbatch = Ys[step_number * batch_size:]
+                        x_minbatch = Xs[step_number * batch_size::]
+                        y_minbatch = Ys[step_number * batch_size::]
 
                     step_cost = sess.run(loss,
                                          feed_dict={x: x_minbatch,
