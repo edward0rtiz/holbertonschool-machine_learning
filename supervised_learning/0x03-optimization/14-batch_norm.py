@@ -2,7 +2,6 @@
 """Script to create a batch normalization layer in a DNN
     using tensorflow"""
 
-import numpy as np
 import tensorflow as tf
 
 
@@ -17,6 +16,21 @@ def create_batch_norm_layer(prev, n, activation):
     Returns: tensor of the activated output for the layer
 
     """
-    x = tf.layers.Dense(units=n, activation=None)
-    f = tf.layers.batch_normalization(inputs=x(prev))
-    return activation(f)
+    initializer = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
+    x = tf.layers.Dense(units=n, kernel_initializer=initializer)
+    x_prev = x(prev)
+    scale = tf.get_variable('gamma', shape=[n])
+    mean, variance = tf.nn.moments(x_prev, axes=[0])
+    offset = tf.get_variable('beta', shape=[n])
+    variance_epsilon = 1e-8
+
+    normalization = tf.nn.batch_normalization(
+        x_prev,
+        mean,
+        variance,
+        offset,
+        scale,
+        variance_epsilon,
+        name=None
+    )
+    return activation(normalization)
