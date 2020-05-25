@@ -55,6 +55,26 @@ def calculate_accuracy(y, y_pred):
     return accuracy
 
 
+def create_layer(prev, n, activation):
+    """
+    method to create a TF layer
+    Args:
+        prev: tensor of the previous layer
+        n: n nodes created
+        activation: activation function
+
+    Returns: Layer created with shape n
+
+    """
+    # Average number of inputs and output connections.
+    initializer = tf.contrib.layers.variance_scaling_initializer(
+        mode='FAN_AVG')
+    layer = tf.layers.Dense(units=n, activation=activation,
+                            kernel_initializer=initializer,
+                            name='layer')
+    return layer(prev)
+
+
 def create_batch_norm_layer(prev, n, activation):
     """
     Function that normalized a batch in a DNN with Tf
@@ -101,7 +121,12 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     """
     layer = create_batch_norm_layer(x, layer_sizes[0], activations[0])
     for i in range(1, len(layer_sizes)):
-        layer = create_batch_norm_layer(layer, layer_sizes[i], activations[i])
+        if layer != len(layer_sizes):
+            layer = create_batch_norm_layer(layer,
+                                            layer_sizes[i],
+                                            activations[i])
+        else:
+            layer = create_layer(layer, layer_sizes[i], activations[i])
     return layer
 
 
