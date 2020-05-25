@@ -54,6 +54,7 @@ def calculate_accuracy(y, y_pred):
 
     return accuracy
 
+
 def create_batch_norm_layer(prev, n, activation):
     """
     Function that normalized a batch in a DNN with Tf
@@ -162,7 +163,8 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
         epsilon: small number used to avoid division by zero
         decay_rate: decay rate for inverse time decay of the learning rate
         batch_size: number of data points that should be in a mini-batch
-        epochs: number of times the training should pass through the whole dataset
+        epochs: number of times the training should pass through the whole
+                dataset
         save_path: path where the model should be saved to
 
     Returns:  path where the model was saved
@@ -170,8 +172,10 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
     (X_train, Y_train) = Data_train
     (X_valid, Y_valid) = Data_valid
 
-    x = tf.placeholder(tf.float32, shape=(None, Data_train[0].shape[1]), name='x')
-    y = tf.placeholder(tf.float32, shape=(None, Data_train[1].shape[1]), name='y')
+    x = tf.placeholder(tf.float32, shape=(None,
+                                          Data_train[0].shape[1]), name='x')
+    y = tf.placeholder(tf.float32, shape=(None,
+                                          Data_train[1].shape[1]), name='y')
 
     tf.add_to_collection('x', x)
     tf.add_to_collection('y', y)
