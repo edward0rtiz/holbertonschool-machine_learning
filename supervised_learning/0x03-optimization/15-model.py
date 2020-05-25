@@ -67,7 +67,7 @@ def create_batch_norm_layer(prev, n, activation):
 
     """
     init = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-    x = tf.layers.Dense(units=n, activation=None, kernel_initializer=init)
+    x = tf.layers.Dense(units=n, kernel_initializer=init)
     x_prev = x(prev)
     scale = tf.Variable(tf.constant(1.0, shape=[n]), name='gamma')
     mean, variance = tf.nn.moments(x_prev, axes=[0])
@@ -82,6 +82,8 @@ def create_batch_norm_layer(prev, n, activation):
         scale,
         variance_epsilon,
     )
+    if activation is None:
+        return normalization
     return activation(normalization)
 
 
@@ -143,4 +145,99 @@ def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
 def model(Data_train, Data_valid, layers, activations, alpha=0.001,
           beta1=0.9, beta2=0.999, epsilon=1e-8, decay_rate=1,
           batch_size=32, epochs=5, save_path='/tmp/model.ckpt'):
+    """
 
+    Args:
+        Data_train: tuple containing the training inputs and
+                    training labels, respectively
+        Data_valid:  tuple containing the validation inputs and
+                    validation labels, respectively
+        layers:  list containing the number of nodes in each layer of
+                the network
+        activations: list containing the activation functions used
+                    for each layer of the network
+        alpha: learning rate
+        beta1: weight for the first moment of Adam Optimization
+        beta2: weight for the second moment of Adam Optimization
+        epsilon: small number used to avoid division by zero
+        decay_rate: decay rate for inverse time decay of the learning rate
+        batch_size: number of data points that should be in a mini-batch
+        epochs: number of times the training should pass through the whole dataset
+        save_path: path where the model should be saved to
+
+    Returns:  path where the model was saved
+    """
+    (X_train, Y_train) = Data_train
+    (X_valid, Y_valid) = Data_valid
+
+    x = tf.placeholder(tf.float32, shape=(None, Data_train[0].shape[1]), name='x')
+    y = tf.placeholder(tf.float32, shape=(None, Data_train[1].shape[1]), name='y')
+
+    tf.add_to_collection('x', x)
+    tf.add_to_collection('y', y)
+
+    y_pred = forward_prop(x, layers, activations)
+    tf.add_to_collection('y_pred', y_pred)
+
+    loss = calculate_loss(y, y_pred)
+    tf.add_to_collection('loss', loss)
+
+    accuracy = calculate_accuracy(y, y_pred)
+    tf.add_to_collection('accuracy', accuracy)
+
+    global_step = tf.Variable(0, trainable=False)
+    alpha = learning_rate_decay(alpha, decay_rate, global_step, 1)
+    train_op = create_Adam_op(loss, alpha, beta1, beta2, epsilon)
+    tf.add_to_collection('train_op', train_op)
+
+    saver = tf.train.Saver()
+    init = tf.global_variables_initializer()
+
+    with tf.Session() as sess:
+        sess.run(init)
+        m = X_train.shape[0]
+        if (m % batch_size) == 0:
+            num_minibatches = int(m / batch_size)
+            check = 1
+        else:
+            num_minibatches = int(m / batch_size) + 1
+            check = 0
+
+        for epoch in range(epochs + 1):
+            feed_train = {x: X_train, y: Y_train}
+            feed_valid = {x: X_valid, y: Y_valid}
+            train_cost = sess.run(loss, feed_dict=feed_train)
+            train_accuracy = sess.run(accuracy, feed_dict=feed_train)
+            valid_cost = sess.run(loss, feed_dict=feed_valid)
+            valid_accuracy = sess.run(accuracy, feed_dict=feed_valid)
+
+            print("After {} epochs:".format(epoch))
+            print("\tTraining Cost: {}".format(train_cost))
+            print("\tTraining Accuracy: {}".format(train_accuracy))
+            print("\tValidation Cost: {}".format(valid_cost))
+            print("\tValidation Accuracy: {}".format(valid_accuracy))
+
+            if epoch < epochs:
+                Xs, Ys = shuffle_data(X_train, Y_train)
+
+                for step_number in range(num_minibatches):
+                    start = step_number * batch_size
+                    end = (step_number + 1) * batch_size
+                    if check == 0 and step_number == num_minibatches - 1:
+                        x_minbatch = Xs[start::]
+                        y_minbatch = Ys[start::]
+                    else:
+                        x_minbatch = Xs[start:end]
+                        y_minbatch = Ys[start:end]
+
+                    feed_mini = {x: x_minbatch, y: y_minbatch}
+                    sess.run(train_op, feed_dict=feed_mini)
+
+                    if ((step_number + 1) % 100 == 0) and (step_number != 0):
+                        step_cost = sess.run(loss, feed_dict=feed_mini)
+                        step_accuracy = sess.run(accuracy, feed_dict=feed_mini)
+                        print("\tStep {}:".format(step_number + 1))
+                        print("\t\tCost: {}".format(step_cost))
+                        print("\t\tAccuracy: {}".format(step_accuracy))
+            save_path = saver.save(sess, save_path)
+    return save_path
