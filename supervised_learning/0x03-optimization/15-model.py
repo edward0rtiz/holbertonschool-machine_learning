@@ -271,6 +271,5 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
                         print("\tStep {}:".format(step_number + 1))
                         print("\t\tCost: {}".format(step_cost))
                         print("\t\tAccuracy: {}".format(step_accuracy))
-            sess.run(tf.assing(global_step, global_step + 1))
             save_path = saver.save(sess, save_path)
     return save_path
