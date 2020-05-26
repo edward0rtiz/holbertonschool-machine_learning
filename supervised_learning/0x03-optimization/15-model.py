@@ -121,7 +121,7 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     """
     layer = create_batch_norm_layer(x, layer_sizes[0], activations[0])
     for i in range(1, len(layer_sizes)):
-        if layer != len(layer_sizes):
+        if layer != len(layer_sizes) - 1:
             layer = create_batch_norm_layer(layer,
                                             layer_sizes[i],
                                             activations[i])
