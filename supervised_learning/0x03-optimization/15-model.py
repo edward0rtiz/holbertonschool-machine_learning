@@ -194,13 +194,14 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
 
     Returns:  path where the model was saved
     """
+    nx = Data_train[0].shape[1]
+    classes = Data_train[1].shape[1]
+
     (X_train, Y_train) = Data_train
     (X_valid, Y_valid) = Data_valid
 
-    x = tf.placeholder(tf.float32, shape=(None,
-                                          Data_train[0].shape[1]), name='x')
-    y = tf.placeholder(tf.float32, shape=(None,
-                                          Data_train[1].shape[1]), name='y')
+    x = tf.placeholder(tf.float32, shape=[None, nx], name='x')
+    y = tf.placeholder(tf.float32, shape=[None, classes], name='y')
 
     tf.add_to_collection('x', x)
     tf.add_to_collection('y', y)
