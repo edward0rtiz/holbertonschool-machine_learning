@@ -123,7 +123,7 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     """
     layer = create_batch_norm_layer(x, layer_sizes[0], activations[0])
     for i in range(1, len(layer_sizes)):
-        if layer != len(layer_sizes) - 1:
+        if i != len(layer_sizes) - 1:
             layer = create_batch_norm_layer(layer,
                                             layer_sizes[i],
                                             activations[i])
@@ -217,7 +217,7 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
     accuracy = calculate_accuracy(y, y_pred)
     tf.add_to_collection('accuracy', accuracy)
 
-    global_step = tf.Variable(0)
+    global_step = tf.Variable(0, trainable=False)
     alpha_op = learning_rate_decay(alpha, decay_rate, global_step, 1)
     train_op = create_Adam_op(loss, alpha_op, beta1, beta2, epsilon)
     tf.add_to_collection('train_op', train_op)
