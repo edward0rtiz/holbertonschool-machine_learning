@@ -3,37 +3,8 @@
     confusion matrix
 """
 
-import numpy as np
-
-
-def precision(confusion):
-    """
-    Function to calculate the precision
-    Args:
-        confusion: numpy.ndarray of shape
-                    (classes, classes)
-    Returns: numpy.ndarray of shape (classes,)
-            containing the precision of each class
-    """
-    TP = np.diag(confusion)
-    FP = np.sum(confusion, axis=0) - TP
-    PPV = TP / (TP + FP)
-    return PPV
-
-
-def sensitivity(confusion):
-    """
-    Function to calculate the sensitivity
-    Args:
-        confusion: numpy.ndarray of shape
-                    (classes, classes)
-    Returns: numpy.ndarray of shape (classes,)
-            containing the sensitivity of each class
-    """
-    TP = np.diag(confusion)
-    FN = np.sum(confusion, axis=1) - TP
-    TPR = TP / (TP + FN)
-    return TPR
+sensitivity = __import__('1-sensitivity').sensitivity
+precision = __import__('2-precision').precision
 
 
 def f1_score(confusion):
