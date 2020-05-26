@@ -90,9 +90,11 @@ def create_batch_norm_layer(prev, n, activation):
     init = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
     x = tf.layers.Dense(units=n, kernel_initializer=init)
     x_prev = x(prev)
-    scale = tf.Variable(tf.constant(1.0, shape=[n]), name='gamma')
+    scale = tf.Variable(tf.constant(1.0, shape=[n]), name='gamma',
+                        trainable=True)
     mean, variance = tf.nn.moments(x_prev, axes=[0])
-    offset = tf.Variable(tf.constant(0.0, shape=[n]), name='beta')
+    offset = tf.Variable(tf.constant(0.0, shape=[n]), name='beta',
+                         trainable=True)
     variance_epsilon = 1e-8
 
     normalization = tf.nn.batch_normalization(
@@ -215,13 +217,13 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
     accuracy = calculate_accuracy(y, y_pred)
     tf.add_to_collection('accuracy', accuracy)
 
-    global_step = tf.Variable(0, trainable=False)
+    global_step = tf.Variable(0)
     alpha_op = learning_rate_decay(alpha, decay_rate, global_step, 1)
     train_op = create_Adam_op(loss, alpha_op, beta1, beta2, epsilon)
     tf.add_to_collection('train_op', train_op)
 
-    saver = tf.train.Saver()
     init = tf.global_variables_initializer()
+    saver = tf.train.Saver()
 
     with tf.Session() as sess:
         sess.run(init)
@@ -269,5 +271,6 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
                         print("\tStep {}:".format(step_number + 1))
                         print("\t\tCost: {}".format(step_cost))
                         print("\t\tAccuracy: {}".format(step_accuracy))
+            sess.run(tf.assing(global_step, global_step + 1))
             save_path = saver.save(sess, save_path)
     return save_path
