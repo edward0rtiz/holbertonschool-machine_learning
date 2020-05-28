@@ -33,14 +33,14 @@ The last layer should use the softmax activation function
         Z = np.matmul(W, A) + B
         dropout = np.random.rand(Z.shape[0], Z.shape[1])
         dropout = np.where(dropout < keep_prob, 1, 0)
+        # dropout = np.random.binomial(1, keep_prob, size=Z.shape)
         if layer == L - 1:
-            softmax = np.exp(2)
-            cache["A" + str(layer)] = (softmax / np.sum(softmax, axis=0,
-                                                        keepdims=True))
+            softmax = np.exp(Z)
+            cache["A" + str(layer + 1)] = (softmax / np.sum(softmax, axis=0,
+                                                            keepdims=True))
         else:
-            tanh = (np.exp(Z) - np.exp(-Z)) / (np.exp(Z) + np.exp(-Z))
-            dtanh = 1 - tanh ** 2
-            cache["A" + str(layer + 1)] = dtanh
+            tanh = np.tanh(Z)
+            cache["A" + str(layer + 1)] = tanh
             cache["D" + str(layer + 1)] = dropout
             cache["A" + str(layer + 1)] *= dropout
             cache["A" + str(layer + 1)] /= keep_prob
