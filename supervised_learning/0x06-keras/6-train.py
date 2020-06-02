@@ -31,7 +31,7 @@ def train_model(network, data, labels, batch_size, epochs,
     if validation_data and early_stopping:
         callback_early_stopping = [ES]
 
-    history = network.fit(data, labels, batch_size=batch_size,
+    history = network.fit(x=data, y=labels, batch_size=batch_size,
                           epochs=epochs, validation_data=validation_data,
                           callbacks=callback_early_stopping,
                           verbose=verbose, shuffle=shuffle,)
