@@ -55,7 +55,7 @@ def train_model(network, data, labels, batch_size, epochs,
     if validation_data and learning_rate_decay:
         custom_callbacks.append(LRD)
     if save_best:
-        save = K.callbacks.ModelCheckpoint(filepath)
+        save = K.callbacks.ModelCheckpoint(filepath, save_best_only=True)
         custom_callbacks.append(save)
 
     history = network.fit(x=data, y=labels, batch_size=batch_size,
