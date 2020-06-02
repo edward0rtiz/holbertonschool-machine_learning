@@ -23,8 +23,13 @@ def train_model(network, data, labels, batch_size, epochs,
     Returns: History object generated after training the model
 
     """
-    history = network.fit(data, labels, epochs=epochs,
-                          batch_size=batch_size, shuffle=shuffle,
+    history = network.fit(data,
+                          labels,
+                          batch_size=batch_size,
+                          epochs=epochs,
+                          validation_data=validation_data,
                           verbose=verbose,
-                          validation_data=validation_data)
+                          shuffle=shuffle
+                          )
+
     return history
