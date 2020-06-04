@@ -6,7 +6,7 @@ import numpy as np
 
 def convolve_grayscale_same(images, kernel):
     """
-    Function to perform a grayscale convolution
+    Function to perform a grayscale same convolution
     Args:
         images: numpy.ndarray with shape (m, h, w) containing
                 multiple grayscale images
