@@ -7,7 +7,7 @@ import numpy as np
 
 def convolve_grayscale_valid(images, kernel):
     """
-    Function to perform a graysclae convolution
+    Function to perform a valid grayscale convolution
     Args:
         images: numpy.ndarray with shape (m, h, w)
                 containing multiple grayscale images
