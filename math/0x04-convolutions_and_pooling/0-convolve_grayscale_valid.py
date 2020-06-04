@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+""" Script that perfoms a valid convolution"""
+
 
 import numpy as np
 
