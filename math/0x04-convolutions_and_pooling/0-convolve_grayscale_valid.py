@@ -7,11 +7,13 @@ def convolve_grayscale_valid(images, kernel):
     """
     Function to perform a graysclae convolution
     Args:
-        images: numpy.ndarray with shape (m, h, w) containing multiple grayscale images
+        images: numpy.ndarray with shape (m, h, w)
+                containing multiple grayscale images
                 m: the number of images
                 h: height in pixels of the images
                 w: width in pixels of the images
-        kernel: numpy.ndarray with shape (kh, kw) containing the kernel for the convolution
+        kernel: numpy.ndarray with shape (kh, kw) containing
+                the kernel for the convolution
                 kn: the height of the kernel
                 kw: the width of the kernel
     Returns: numpy.ndarray containing the convolved images
@@ -33,5 +35,6 @@ def convolve_grayscale_valid(images, kernel):
     for x in range(output_h):
         for y in range(output_w):
             # element wise multiplication of the kernel and the image
-            conv_out[image, x, y] = (np.sum(images[image, x:kh+x, y:kw+y] * kernel, axis=(1, 2)))
+            conv_out[image, x, y] = (np.sum(images[image, x:kh+x,
+                                            y:kw+y] * kernel, axis=(1, 2)))
     return conv_out
