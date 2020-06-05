@@ -50,7 +50,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
                        mode='constant')
 
     output_h = int(((h + 2 * pad_h - kh) / sh) + 1)
-    output_w = int(((w + 2 * pad_w - kh) / sw) + 1)
+    output_w = int(((w + 2 * pad_w - kw) / sw) + 1)
 
     # convolution output
     conv_out = np.zeros((m, output_h, output_w))
