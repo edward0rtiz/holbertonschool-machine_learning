@@ -33,25 +33,29 @@ def pool(images, kernel_shape, stride, mode='max'):
     c = images.shape[3]
     kh = kernel_shape[0]
     kw = kernel_shape[1]
-    # nc = kernels.shape[3]  # Needs to be the same frequency of c
-    # pad_w = 0
-    # pad_h = 0
     sh = stride[0]
     sw = stride[1]
 
-    output_h = int(1 + ((h -kh) / sh))
-    output_w = int(1 + ((w -kw) / sw))
+    output_h = int(1 + ((h - kh) / sh))
+    output_w = int(1 + ((w - kw) / sw))
 
     # convolution output
     conv_out = np.zeros((m, output_h, output_w, c))
 
     image = np.arange(m)
 
-
     # Loop every pixel of the output
     for x in range(output_h):
         for y in range(output_w):
-            # element wise multiplication of the kernel and the image
-            conv_out[image, x, y] = (np.max(images[image, x * sh:((x * sh) + kh),
-                                            y * sw:((y * sw) + kw)], axis=(1, 2)))
+            # pooling implementation
+            if mode == 'max':
+                conv_out[image, x, y] = (np.max(images[image,
+                                                x * sh:((x * sh) + kh),
+                                                y * sw:((y * sw) + kw)],
+                                                axis=(1, 2)))
+            elif mode == 'avg':
+                conv_out[image, x, y] = (np.max(images[image,
+                                                x * sh:((x * sh) + kh),
+                                                y * sw:((y * sw) + kw)],
+                                                axis=(1, 2)))
     return conv_out
