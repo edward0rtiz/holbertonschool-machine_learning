@@ -54,7 +54,7 @@ def pool(images, kernel_shape, stride, mode='max'):
                                                 y * sw:((y * sw) + kw)],
                                                 axis=(1, 2)))
             elif mode == 'avg':
-                conv_out[image, x, y] = (np.max(images[image,
+                conv_out[image, x, y] = (np.mean(images[image,
                                                 x * sh:((x * sh) + kh),
                                                 y * sw:((y * sw) + kw)],
                                                 axis=(1, 2)))
