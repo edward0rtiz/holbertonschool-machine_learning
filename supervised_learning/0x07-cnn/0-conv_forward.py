@@ -67,8 +67,9 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
         for j in range(c_w):
             for k in range(c_new):
                 # Use corners to define 3D slice of img_pad element wise
+                # sth = i * sh // endh =  ((i * sh) + kh)
                 img_slice = img_pad[:, i * sh:((i * sh) + kh),
-                                    j * sw:((j * sw) + kw)]
+                            j * sw:((j * sw) + kw)]
                 kernel = W[:, :, :, k]
                 biases = b[:, :, :, k]
                 conv[:, i, j, k] = (np.sum(img_slice * kernel,
