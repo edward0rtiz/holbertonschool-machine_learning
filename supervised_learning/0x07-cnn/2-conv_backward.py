@@ -92,6 +92,6 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
             # set the ith training example dA_prev to unppaded da_prev_pad
             dA_prev[i, :, :, :] += da_prev_pad[ph:-ph, pw:-pw]
         if padding == 'valid':
-            dA_prev[i] += da_prev_pad
+            dA_prev[i, :, :, :] += da_prev_pad
 
     return dA_prev, dW, db
