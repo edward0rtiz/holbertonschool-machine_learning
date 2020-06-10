@@ -40,7 +40,7 @@ def pool_forward(A_prev, kernel_shape, stride=(1, 1), mode='max'):
     c_w = int((w_prev - kw) / sw) + 1
 
     # Initialize the output volume conv (Z) with zeros
-    conv = np.zeros((m, c_w, c_h, c_prev))
+    conv = np.zeros((m, c_h, c_w, c_prev))
 
     # Loop over the vertical_ax, then horizontal_ax, then over channel
     for x in range(c_h):
