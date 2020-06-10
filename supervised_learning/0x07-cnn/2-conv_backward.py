@@ -46,14 +46,10 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     # Retrieve the values of the stride
     sh, sw = stride
 
-    # Padding values
-    pw = 0
-    ph = 0
-
     # Initialize dA_prev, dW, db with the correct shapes
     dA_prev = np.zeros(A_prev.shape)
     dW = np.zeros(W.shape)
-    db = np.zeros(W.shape)
+    db = np.zeros(b.shape)
 
     if padding == 'same':
         ph = int(np.ceil((((h_prev - 1) * sh + kh - h_prev) / 2)))
