@@ -53,10 +53,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     # Initialize dA_prev, dW, db with the correct shapes
     dA_prev = np.zeros(A_prev.shape)
     dW = np.zeros(W.shape)
-
-
-
-    db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
+    db = np.zeros(W.shape)
 
     if padding == 'same':
         ph = int(np.ceil((((h_prev - 1) * sh + kh - h_prev) / 2)))
@@ -73,8 +70,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
     # Loop over the vertical_ax, then horizontal_ax, then over channel
     for i in range(m):
-        a_prev_pad = A_prev_pad[i, :, :, :]
-        da_prev_pad = dA_prev_pad[i, :, :, :]
+        a_prev_pad = A_prev_pad[i]
+        da_prev_pad = dA_prev_pad[i]
         for h in range(h_new):
             for w in range(w_new):
                 for c in range(c_new):
@@ -97,8 +94,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
         if padding == 'same':
             # set the ith training example dA_prev to unppaded da_prev_pad
-            dA_prev[i, :, :, :] = da_prev_pad[ph:-ph, pw:-pw, :]
+            dA_prev[i, :, :, :] += da_prev_pad[ph:-ph, pw:-pw]
         if padding == 'valid':
-            dA_prev[i, :, :, :] = da_prev_pad[:, :, :]
+            dA_prev[i] += da_prev_pad
 
     return dA_prev, dW, db
