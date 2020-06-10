@@ -46,17 +46,17 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     # Retrieve the values of the stride
     sh, sw = stride
 
-    # Initialize dA_prev, dW, db with the correct shapes
-    dA_prev = np.zeros(A_prev.shape)
-    dW = np.zeros(W.shape)
-    db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
-
     if padding == 'same':
         ph = int(np.ceil((((h_prev - 1) * sh + kh - h_prev) / 2)))
         pw = int(np.ceil((((w_prev - 1) * sw + kw - w_prev) / 2)))
     if padding == 'valid':
         pw = 0
         ph = 0
+
+    # Initialize dA_prev, dW, db with the correct shapes
+    dA_prev = np.zeros(A_prev.shape)
+    dW = np.zeros(W.shape)
+    db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
 
     # Pad with zeros all images of the dataset
     A_prev_pad = np.pad(A_prev, pad_width=((0, 0), (ph, ph), (pw, pw),
@@ -79,14 +79,13 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     h_end = h_start + kw
 
                     # Use corners to define the slice from a_prev_pad
-                    a_slice = a_prev_pad[v_start:v_end, h_start:h_end, :]
+                    a_slice = a_prev_pad[v_start:v_end, h_start:h_end]
 
                     # update gradients for the window filter param
                     da_prev_pad[v_start:v_end,
-                                h_start:h_end,
-                                :] += W[:, :, :, c] * dZ[i, h, w, c]
+                                h_start:h_end] += \
+                        W[:, :, :, c] * dZ[i, h, w, c]
                     dW[:, :, :, c] += a_slice * dZ[i, h, w, c]
-                    db[:, :, :, c] += dZ[i, h, w, c]
 
         if padding == 'same':
             # set the ith training example dA_prev to unppaded da_prev_pad
