@@ -33,7 +33,7 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
 
     # Retrieve the dimensions from A_prev shape
     (m, h_prev, w_prev, c_prev) = A_prev.shape
-gi
+
     # Retrieve the dimensions from A_prev shape
     (kh, kw, c_prev, c_new) = W.shape
 
@@ -71,7 +71,7 @@ gi
                 img_slice = img_pad[:, i * sh:((i * sh) + kh),
                                     j * sw:((j * sw) + kw)]
                 kernel = W[:, :, :, k]
-                biases = b[0, 0, 0, k]
+                biases = b
                 conv[:, i, j, k] = (np.sum(img_slice * kernel,
                                            axis=(1, 2, 3)))
     Z = conv + biases
