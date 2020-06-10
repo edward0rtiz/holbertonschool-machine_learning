@@ -45,22 +45,23 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
     ph = 0
 
     if padding == 'same':
-        ph = int((((h_prev - 1) * sh + kh - h_prev) / 2) + 1)
-        pw = int((((w_prev - 1) * sw + kw - w_prev) / 2) + 1)
-    if type(padding) == tuple:
-        ph = padding[0]
-        pw = padding[1]
+        ph = int(np.ceil((((h_prev - 1) * sh + kh - h_prev) / 2)))
+        pw = int(np.ceil((((w_prev - 1) * sw + kw - w_prev) / 2)))
+    if padding == 'valid':
+        ph = 0
+        pw = 0
 
     # Create an image pad using np.pad
-    img_pad = np.pad(A_prev, pad_width=((0, 0), (ph, ph), (pw, pw),
-                                        (0, 0)), mode='constant')
+    img_pad = np.pad(A_prev,
+                     pad_width=((0, 0), (ph, ph), (pw, pw), (0, 0)),
+                     mode='constant')
 
     # Compute the dimensions of the CONV output volume
     c_h = int(((h_prev + 2 * ph - kh) / sh) + 1)
     c_w = int(((w_prev + 2 * pw - kw) / sw) + 1)
 
     # Initialize the output volume conv (Z) with zeros
-    conv = np.zeros((m, c_w, c_h, c_new))
+    conv = np.zeros((m, c_h, c_w, c_new))
 
     # Loop over the vertical_ax, then horizontal_ax, then over channel
     for i in range(c_h):
@@ -68,11 +69,14 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
             for k in range(c_new):
                 # Use corners to define 3D slice of img_pad element wise
                 # sth = i * sh // endh =  ((i * sh) + kh)
-                img_slice = img_pad[:, i * sh:((i * sh) + kh),
-                                    j * sw:((j * sw) + kw)]
+                v_start = i * sh
+                v_end = v_start + kh
+                h_start = j * sw
+                h_end = h_start + kw
+                img_slice = img_pad[:, v_start:v_end, h_start:h_end]
                 kernel = W[:, :, :, k]
-                biases = b
-                conv[:, i, j, k] = (np.sum(img_slice * kernel,
-                                           axis=(1, 2, 3)))
-    Z = conv + biases
+                conv[:, i, j, k] = (np.sum(np.multiply(img_slice,
+                                                       kernel),
+                                                       axis=(1, 2, 3)))
+    Z = conv + b
     return activation(Z)
