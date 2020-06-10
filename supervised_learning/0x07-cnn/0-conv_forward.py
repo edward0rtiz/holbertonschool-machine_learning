@@ -33,7 +33,7 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
 
     # Retrieve the dimensions from A_prev shape
     (m, h_prev, w_prev, c_prev) = A_prev.shape
-
+gi
     # Retrieve the dimensions from A_prev shape
     (kh, kw, c_prev, c_new) = W.shape
 
@@ -45,8 +45,8 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
     ph = 0
 
     if padding == 'same':
-        ph = int(np.ceil((((h_prev - 1) * sh + kh - h_prev) / 2)))
-        pw = int(np.ceil((((w_prev - 1) * sw + kw - w_prev) / 2)))
+        ph = int((((h_prev - 1) * sh + kh - h_prev) / 2) + 1)
+        pw = int((((w_prev - 1) * sw + kw - w_prev) / 2) + 1)
     if type(padding) == tuple:
         ph = padding[0]
         pw = padding[1]
@@ -71,7 +71,7 @@ def conv_forward(A_prev, W, b, activation, padding='same', stride=(1, 1)):
                 img_slice = img_pad[:, i * sh:((i * sh) + kh),
                                     j * sw:((j * sw) + kw)]
                 kernel = W[:, :, :, k]
-                biases = b[:, :, :, k]
+                biases = b[0, 0, 0, k]
                 conv[:, i, j, k] = (np.sum(img_slice * kernel,
                                            axis=(1, 2, 3)))
     Z = conv + biases
