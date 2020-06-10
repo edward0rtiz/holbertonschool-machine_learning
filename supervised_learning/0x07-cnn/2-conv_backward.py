@@ -53,15 +53,17 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     # Initialize dA_prev, dW, db with the correct shapes
     dA_prev = np.zeros(A_prev.shape)
     dW = np.zeros(W.shape)
-    db = np.zeros(W.shape)
+
+
+
+    db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
 
     if padding == 'same':
         ph = int(np.ceil((((h_prev - 1) * sh + kh - h_prev) / 2)))
         pw = int(np.ceil((((w_prev - 1) * sw + kw - w_prev) / 2)))
-
-    if type(padding) == tuple:
-        pw = padding[1]
-        ph = padding[0]
+    if padding == 'valid':
+        pw = 0
+        ph = 0
 
     # Pad with zeros all images of the dataset
     A_prev_pad = np.pad(A_prev, pad_width=((0, 0), (ph, ph), (pw, pw),
