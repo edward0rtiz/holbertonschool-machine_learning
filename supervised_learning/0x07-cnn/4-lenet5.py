@@ -50,7 +50,7 @@ def lenet5(x, y):
     FC2 = tf.layers.Dense(units=84, activation=activation,
                           kernel_initializer=init)(FC1)
     # Fully connected layer 3
-    FC3 = tf.layers.Dense(units=10, activation='softmax', kernel_initializer=init)(FC2)
+    FC3 = tf.layers.Dense(units=10, kernel_initializer=init)(FC2)
 
     # Prediction variable
     y_pred = FC3
@@ -65,6 +65,6 @@ def lenet5(x, y):
     correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_pred, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-    # y_pred = tf.nn.softmax(y_pred)
+    y_pred = tf.nn.softmax(y_pred)
 
     return y_pred, train, loss, accuracy
