@@ -50,7 +50,7 @@ def lenet5(x, y):
     FC2 = tf.layers.Dense(units=84, activation=activation,
                           kernel_initializer=init)(FC1)
     # Fully connected layer 3
-    FC3 = tf.layers.Dense(units=10, activation='softmax' kernel_initializer=init)(FC2)
+    FC3 = tf.layers.Dense(units=10, activation='softmax', kernel_initializer=init)(FC2)
 
     # Prediction variable
     y_pred = FC3
