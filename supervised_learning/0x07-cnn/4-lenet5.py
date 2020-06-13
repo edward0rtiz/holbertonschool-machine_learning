@@ -55,6 +55,8 @@ def lenet5(x, y):
     # Prediction variable
     y_pred = FC3
 
+    y_pred = tf.nn.softmax(y_pred)
+
     # Loss function
     loss = tf.losses.softmax_cross_entropy(y, FC3)
 
@@ -64,7 +66,5 @@ def lenet5(x, y):
     # accuracy
     correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_pred, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-    y_pred = tf.nn.softmax(y_pred)
 
     return y_pred, train, loss, accuracy
