@@ -29,30 +29,30 @@ def inception_block(A_prev, filters):
                                activation=activation,
                                kernel_initializer=init)(A_prev)
 
-    convly_2B = K.layers.Conv2D(filters=F3R, kernel_size=1, padding='same',
+    convly_2P = K.layers.Conv2D(filters=F3R, kernel_size=1, padding='same',
                                 activation=activation,
                                 kernel_initializer=init)(A_prev)
 
     convly_2 = K.layers.Conv2D(filters=F3, kernel_size=3, padding='same',
                                activation=activation,
-                               kernel_initializer=init)(convly_2B)
+                               kernel_initializer=init)(convly_2P)
 
-    convly_3B = K.layers.Conv2D(filters=F5R, kernel_size=1, padding='same',
+    convly_3P = K.layers.Conv2D(filters=F5R, kernel_size=1, padding='same',
                                 activation=activation,
                                 kernel_initializer=init)(A_prev)
 
     convly_3 = K.layers.Conv2D(filters=F5, kernel_size=5, padding='same',
                                activation=activation,
-                               kernel_initializer=init)(convly_3B)
+                               kernel_initializer=init)(convly_3P)
 
     layer_pool = K.layers.MaxPooling2D(pool_size=[3, 3], strides=(1, 1),
                                        padding='same')(A_prev)
 
-    layer_poolB = K.layers.Conv2D(filters=FPP, kernel_size=1, padding='same',
+    layer_poolP = K.layers.Conv2D(filters=FPP, kernel_size=1, padding='same',
                                   activation=activation,
                                   kernel_initializer=init)(layer_pool)
 
     mid_layer = K.layers.concatenate([convly_1, convly_2,
-                                      convly_3, layer_poolB])
+                                      convly_3, layer_poolP])
 
     return mid_layer
