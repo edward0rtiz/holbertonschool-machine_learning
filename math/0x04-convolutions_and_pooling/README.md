@@ -1,4 +1,4 @@
-0x04 Convolutions and Pooling :robot:
+# 0x04 Convolutions and Pooling :robot:
 
 > Convolution is the first layer to extract features from an input image. Convolution preserves the relationship between pixels by learning image features using small squares of input data. It is a mathematical operation that takes two inputs such as image matrix and a filter or kernel. This porject covers the implemenation of convolutions operations from scratch in python. No tf or keras used just mathematics :)!
 
