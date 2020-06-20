@@ -20,7 +20,8 @@
 | [supervised_learning/0x04-error_analysis](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x04-error_analysis)| Error analysis scripts for monitoring error in DNN models|
 | [supervised_learning/0x05-regularization](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x05-regularization)| Python scripts for regularization ML DNN models to avoid overfitting|
 | [supervised_learning/0x06-keras](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x06-keras)| Keras scripts for implement DNN models|
-| [supervised_learning/0x07-cnn](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x07-cnn)| Tensor Flow, Keras and Python scripts for create CNN models| 
+| [supervised_learning/0x07-cnn](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x07-cnn)| Tensor Flow, Keras and Python scripts for create CNN models|
+| [supervised_learning/0x08-deep_cnns](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x08-deep_cnns)| Building 5 of the most disruptives Deep neural network architectures| 
 
 # Stack :books:
 
