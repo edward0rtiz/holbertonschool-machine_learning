@@ -22,6 +22,7 @@
 | [supervised_learning/0x06-keras](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x06-keras)| Keras scripts for implement DNN models|
 | [supervised_learning/0x07-cnn](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x07-cnn)| Tensor Flow, Keras and Python scripts for create CNN models|
 | [supervised_learning/0x08-deep_cnns](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x08-deep_cnns)| Building 5 of the most disruptives Deep neural network architectures| 
+| [supervised_learning/0x09-transfer_learning](https://github.com/edward0rtiz/holbertonschool-machine_learning/tree/master/supervised_learning/0x09-transfer_learning)| Transfer learning application using densenet-121 in CIFAR-10 with keras (other architectures in aux dir)|
 
 # Stack :books:
 
