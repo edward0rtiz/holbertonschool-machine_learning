@@ -3,11 +3,8 @@
 
 import tensorflow as tf
 import tensorflow.keras as K
-from keras.utils import to_categorical
-import numpy as np
 import datetime
 from tensorflow.keras.datasets import cifar10
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 # Global Variables
 batch_size = 128
