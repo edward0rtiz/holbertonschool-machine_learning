@@ -81,7 +81,7 @@ class Yolo():
 
         b_classes_score = [score.argmax(axis=-1) for score in box_score]
         b_score_l = [box.reshape(-1) for box in b_classes_score]
-        b_score_concat = np.concatenate(b_score_l)
+        b_score_concat = np.concatenate(b_score_l, axis=-1)
 
         filter_mask = np.where(b_score_concat >= self.class_t)
 
