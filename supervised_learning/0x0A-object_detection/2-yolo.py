@@ -89,8 +89,8 @@ class Yolo():
 
         # mask boxes
         b_list = [box.reshape(-1, 4) for box in boxes]
-        boxes = np.concatenate(b_list, axis=0)
-        filtered_boxes = boxes[filter_mask]
+        b_concat = np.concatenate(b_list, axis=0)
+        filtered_boxes = b_concat[filter_mask]
 
         b_class =  [score.max(axis=-1) for score in box_score]
         b_class_l = [box.reshape(-1) for box in b_class]
