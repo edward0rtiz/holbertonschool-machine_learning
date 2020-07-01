@@ -98,4 +98,4 @@ class Yolo():
 
         box_classes = b_class_concat[filter_mask]
 
-        return filtered_boxes, box_classes, box_score
+        return filtered_boxes, box_classes, box_scores
