@@ -48,15 +48,15 @@ class Yolo():
 
         boxes = [pred[:, :, :, 0:4] for pred in outputs]
         for ipred, pred in enumerate(boxes):
-            for grid_w in range(pred.shape[0]):
-                for grid_h in range(pred.shape[1]):
-                    cx = ((self.sigmoid(pred[grid_w, grid_h, :, 0]) + grid_h) / pred.shape[1] * image_size[1])
-                    cy = ((self.sigmoid(pred[grid_w, grid_h, :, 1]) + grid_w) / pred.shape[0] * image_size[0])
+            for grid_h in range(pred.shape[0]):
+                for grid_w in range(pred.shape[1]):
+                    cx = ((self.sigmoid(pred[grid_w, grid_h, :, 0]) + grid_w) / pred.shape[1] * image_size[1])
+                    cy = ((self.sigmoid(pred[grid_w, grid_h, :, 1]) + grid_h) / pred.shape[0] * image_size[0])
                     anchor_tensor = self.anchors[ipred].astype(float)
                     th = image_size[1] / self.model.input.shape[1].value
                     tw = image_size[0] / self.model.input.shape[2].value
-                    anchor_tensor[:, 0] *= self.sigmoid(pred[grid_w, grid_h, :, 2]) / 2 * th
                     anchor_tensor[:, 1] *= self.sigmoid(pred[grid_w, grid_h, :, 3]) / 2 * tw
+                    anchor_tensor[:, 0] *= self.sigmoid(pred[grid_w, grid_h, :, 2]) / 2 * th
                     pred[grid_w, grid_h, :, 0] = cx - anchor_tensor[:, 0]  # x1
                     pred[grid_w, grid_h, :, 1] = cy - anchor_tensor[:, 1]  # y1
                     pred[grid_w, grid_h, :, 2] = cx + anchor_tensor[:, 0]  # x2
