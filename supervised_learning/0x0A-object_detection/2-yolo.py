@@ -79,8 +79,8 @@ class Yolo():
             score = (box_conf * box_probs)
             box_score.append(score)
 
-        b_classes_score = [score.argmax(axis=-1) for score in box_score]
-        b_score_l = [box.reshape(-1) for box in b_classes_score]
+        b_classes = [score.argmax(axis=-1) for score in box_score]
+        b_score_l = [box.reshape(-1) for box in b_classes]
         b_score_concat = np.concatenate(b_score_l, axis=-1)
 
         filter_mask = np.where(b_score_concat >= self.class_t)
@@ -92,8 +92,8 @@ class Yolo():
         b_concat = np.concatenate(boxes, axis=0)
         filtered_boxes = b_concat[filter_mask]
 
-        b_class = [score.max(axis=-1) for score in box_score]
-        b_class_l = [box.reshape(-1) for box in b_class]
+        b_classes_score = [score.max(axis=-1) for score in box_score]
+        b_class_l = [box.reshape(-1) for box in b_classes_score]
         b_class_concat = np.concatenate(b_class_l, axis=-1)
 
         box_classes = b_class_concat[filter_mask]
