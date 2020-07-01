@@ -63,7 +63,7 @@ class Yolo():
                     pred[grid_w, grid_h, :, 3] = cy + anchor_tensor[:, 1]  # y2
         # box confidence
 
-        box_confidences = [self.sigmoid(pred[:, :, :, 4, np.newaxis]) for pred in outputs]
+        box_confidences = [self.sigmoid(pred[:, :, :, 4:5]) for pred in outputs]
 
         # box class probs
         box_class_probs = [self.sigmoid(pred[:, :, :, 5:]) for pred in outputs]
