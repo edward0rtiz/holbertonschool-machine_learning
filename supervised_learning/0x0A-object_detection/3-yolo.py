@@ -146,9 +146,6 @@ class Yolo():
                         for each box in filtered_boxes, respectively
         Returns: box_predictions, predicted_box_classes, predicted_box_scores
         """
-
-        #  nms_t: the IOU threshold for non - max suppression
-
         f = []
         c = []
         s = []
