@@ -96,7 +96,7 @@ class Yolo():
 
         # Filtered all unbounding boxes
         boxes_all = [box.reshape(-1, 4) for box in boxes]
-        boxes_all = np.concatenate(boxes_all, axis=0)
+        boxes_all = np.concatenate(boxes_all)
 
         # Applying the mask to scores, boxes and classes
         scores = box_class_scores[mask]
