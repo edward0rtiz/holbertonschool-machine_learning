@@ -84,12 +84,12 @@ class Yolo():
         # Finding the index of the class with maximum box score
         box_classes = [score.argmax(axis=-1) for score in box_score]
         box_class_l = [box.reshape(-1) for box in box_classes]
-        box_classes = np.concatenate(box_class_l, axis=-1)
+        box_classes = np.concatenate(box_class_l)
 
         # Getting the corresponding box score
         box_class_scores = [score.max(axis=-1) for score in box_score]
         b_scores_l = [box.reshape(-1) for box in box_class_scores]
-        box_class_scores = np.concatenate(b_scores_l, axis=-1)
+        box_class_scores = np.concatenate(b_scores_l)
 
         # Filter mask (pc >= threshold)
         mask = np.where(box_class_scores >= self.class_t)
