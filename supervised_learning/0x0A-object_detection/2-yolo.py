@@ -41,8 +41,8 @@ class Yolo():
             outputs: list of numpy.ndarrays containing the predictions from
                      the Darknet model for a single image:
                         (grid_height, grid_width, anchor_boxes, 4 + 1 + classes)
-            image_size:
-
+            image_size: numpy.ndarray containing the image’s original size
+                        [image_height, image_width]
         Returns: (boxes, box_confidences, box_class_probs)
         """
 
@@ -74,6 +74,18 @@ class Yolo():
         return boxes, box_confidences, box_class_probs
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
+        """
+        Function that filter boxes
+        Args:
+            boxes: List of numpy.ndarrays of shape (grid_height, grid_width, anchor_boxes, 4) containing
+                   the processed boundary boxes for each output, respectively
+            box_confidences: list of numpy.ndarrays of shape (grid_height, grid_width, anchor_boxes, 1)
+                             containing the processed box confidences for each output, respectively
+            box_class_probs: list of numpy.ndarrays of shape (grid_height, grid_width, anchor_boxes,
+                             classes) containing the processed box class probabilities for each output,
+                             respectively
+        Returns: Tuple of (filtered_boxes, box_classes, box_scores)
+        """
         box_score = []
         bc = box_confidences
         bcp = box_class_probs
