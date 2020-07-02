@@ -75,27 +75,32 @@ class Yolo():
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
         box_score = []
-        for box_conf, box_probs in zip(box_confidences, box_class_probs):
+        bc = box_confidences
+        bcp = box_class_probs
+
+        for box_conf, box_probs in zip(bc, bcp):
             score = (box_conf * box_probs)
             box_score.append(score)
+        # Finding the index of the class with maximum box score
+        box_classes = [score.argmax(axis=3) for score in box_score]
+        box_class_l = [box.reshape(-1) for box in box_classes]
+        box_classes = np.concatenate(box_class_l, axis=-1)
 
-        b_classes = [score.argmax(axis=-1) for score in box_score]
-        b_score_l = [box.reshape(-1) for box in b_classes]
-        b_score_concat = np.concatenate(b_score_l, axis=-1)
+        # Getting the corresponding box score
+        box_class_scores = [score.max(axis=3) for score in box_score]
+        b_scores_l = [box.reshape(-1) for box in box_class_scores]
+        box_class_scores = np.concatenate(b_scores_l, axis=-1)
 
-        filter_mask = np.where(b_score_concat >= self.class_t)
+        # Filter mask (pc >= threshold)
+        mask = np.where(box_class_scores >= self.class_t)
 
-        box_scores = b_score_concat[filter_mask]
+        # Filtered all unbounding boxes
+        boxes_all = [box.reshape(-1, 4) for box in boxes]
+        boxes_all = np.concatenate(boxes_all, axis=0)
 
-        # mask boxes
-        boxes = [box.reshape(-1, 4) for box in boxes]
-        b_concat = np.concatenate(boxes, axis=0)
-        filtered_boxes = b_concat[filter_mask]
+        # Applying the mask to scores, boxes and classes
+        scores = box_class_scores[mask]
+        boxes = boxes_all[mask]
+        classes = box_classes[mask]
 
-        b_classes_score = [score.max(axis=-1) for score in box_score]
-        b_class_l = [box.reshape(-1) for box in b_classes_score]
-        b_class_concat = np.concatenate(b_class_l, axis=-1)
-
-        box_classes = b_class_concat[filter_mask]
-
-        return filtered_boxes, box_classes, box_scores
+        return boxes, classes, scores
