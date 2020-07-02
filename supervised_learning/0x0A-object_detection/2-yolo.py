@@ -94,6 +94,7 @@ class Yolo():
         # Filter mask (pc >= threshold)
         mask = np.where(box_class_scores >= self.class_t)
 
+
         # Filtered all unbounding boxes
         boxes_all = [b.reshape(-1, 4) for b in boxes]
         boxes_all = np.concatenate(boxes_all)
@@ -102,6 +103,5 @@ class Yolo():
         scores = box_class_scores[mask]
         boxes = boxes_all[mask]
         classes = box_classes[mask]
-        print("----------->", boxes)
 
         return boxes, classes, scores
