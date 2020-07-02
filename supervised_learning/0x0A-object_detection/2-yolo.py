@@ -82,25 +82,26 @@ class Yolo():
             score = (box_conf * box_probs)
             box_score.append(score)
         # Finding the index of the class with maximum box score
-        box_classes = [score.argmax(axis=-1) for score in box_score]
-        box_class_l = [box.reshape(-1) for box in box_classes]
+        box_classes = [s.argmax(axis=-1) for s in box_score]
+        box_class_l = [b.reshape(-1) for b in box_classes]
         box_classes = np.concatenate(box_class_l)
 
         # Getting the corresponding box score
-        box_class_scores = [score.max(axis=-1) for score in box_score]
-        b_scores_l = [box.reshape(-1) for box in box_class_scores]
+        box_class_scores = [s.max(axis=-1) for s in box_score]
+        b_scores_l = [b.reshape(-1) for b in box_class_scores]
         box_class_scores = np.concatenate(b_scores_l)
 
         # Filter mask (pc >= threshold)
         mask = np.where(box_class_scores >= self.class_t)
 
         # Filtered all unbounding boxes
-        boxes_all = [box.reshape(-1, 4) for box in boxes]
+        boxes_all = [b.reshape(-1, 4) for b in boxes]
         boxes_all = np.concatenate(boxes_all)
 
         # Applying the mask to scores, boxes and classes
         scores = box_class_scores[mask]
         boxes = boxes_all[mask]
         classes = box_classes[mask]
+        print("----------->", boxes)
 
         return boxes, classes, scores
