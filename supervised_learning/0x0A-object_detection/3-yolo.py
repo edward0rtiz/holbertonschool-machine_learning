@@ -3,8 +3,6 @@
 
 import tensorflow.keras as K
 import numpy as np
-import cv2 as cv
-import glob
 
 
 class Yolo():
@@ -207,12 +205,3 @@ class Yolo():
             inds = np.where(ovr <= thresh)[0]
             order = order[inds + 1]
         return keep
-
-    @staticmethod
-    def load_images(folder_path):
-        images = []
-        images_paths = glob.glob(folder_path + '/*')
-        for i in images_paths:
-            image = cv.imread(i)
-            images.append(image)
-        return (images, images_paths)
