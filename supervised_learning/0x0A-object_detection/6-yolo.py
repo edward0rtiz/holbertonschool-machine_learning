@@ -266,9 +266,6 @@ class Yolo():
         for i, box in enumerate(boxes):
             x1 = int(box[0])
             y1 = int(box[1])
-            x2 = int(box[2])
-            y2 = int(box[3])
-
             start_point = int(box[0]), int(box[1])
             end_point = int(box[2]), int(box[3])
             scores = "{:.2f}".format(box_scores[i])
