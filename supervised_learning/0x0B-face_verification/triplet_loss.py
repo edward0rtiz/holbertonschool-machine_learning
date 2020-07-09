@@ -3,8 +3,6 @@
 Triplet_loss
 """
 
-import numpy as np
-import tensorflow as tf
 import tensorflow.keras as K
 from tensorflow.keras.layers import Layer
 
