@@ -14,8 +14,10 @@ class FaceVerification:
         self.identities = identities
 
     def embedding(self, images):
-        embeddings = self.model.predict(images)
-        return embeddings
+        embedded = np.zeros((images.shape[0], 128))
+
+        for i, img in enumerate(images):
+            embedded[i] = self.base_model.predict(np.expand_dims(img, axis=0))[0]
+        return embedded
 
     def verify(self, image, tau=0.5):
-        return identity, distance
