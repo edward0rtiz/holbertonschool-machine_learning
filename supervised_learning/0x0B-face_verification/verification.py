@@ -5,6 +5,7 @@ Verification face recognition
 
 import tensorflow.keras as K
 import tensorflow as tf
+import numpy as np
 
 class FaceVerification:
     def __init__(self, model, database, identities):
@@ -20,4 +21,4 @@ class FaceVerification:
             embedded[i] = self.base_model.predict(np.expand_dims(img, axis=0))[0]
         return embedded
 
-    def verify(self, image, tau=0.5):
+    # def verify(self, image, tau=0.5):
