@@ -7,8 +7,6 @@ import tensorflow.keras as K
 from triplet_loss import TripletLoss
 import numpy as np
 
-#tf.enable_eager_execution()
-
 
 class TrainModel():
     def __init__(self, model_path, alpha):
@@ -129,7 +127,8 @@ class TrainModel():
         embedded = np.zeros((images.shape[0], 128))
 
         for i, img in enumerate(images):
-            embedded[i] = self.base_model.predict(np.expand_dims(img, axis=0))[0]
+            embedded[i] = self.base_model.predict(np.expand_dims(img,
+                                                                 axis=0))[0]
 
         distances = []
         identical = []
@@ -144,8 +143,10 @@ class TrainModel():
         distances = np.array(distances)
         identical = np.array(identical)
 
-        f1_scores = [self.f1_score(identical, distances < t) for t in thresholds]
-        acc_scores = [self.accuracy(identical, distances < t) for t in thresholds]
+        f1_scores = [self.f1_score(identical,
+                                   distances < t) for t in thresholds]
+        acc_scores = [self.accuracy(identical,
+                                    distances < t) for t in thresholds]
 
         f1_idx = np.argmax(f1_scores)
         opt_f1 = f1_scores[f1_idx]
