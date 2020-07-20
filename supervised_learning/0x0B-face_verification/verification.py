@@ -9,6 +9,9 @@ import numpy as np
 
 
 class FaceVerification:
+    """
+    Class verification
+    """
     def __init__(self, model_path, database, identities):
         with K.utils.CustomObjectScope({'tf': tf}):
             self.model = K.models.load_model(model_path)
@@ -16,6 +19,12 @@ class FaceVerification:
         self.identities = identities
 
     def embedding(self, images):
+        """
+        embedding
+        Args:
+            images: Images to be embedded
+        Returns: embedded images
+        """
         embedded = np.zeros((images.shape[0], 128))
 
         for i, img in enumerate(images):
@@ -23,8 +32,23 @@ class FaceVerification:
         return embedded
 
     def verify(self, image, tau=0.5):
+        """
+        Verify tay
+        Args:
+            image: input images
+            tau: tau for best distances between vectors
+        Returns: TAU
+        """
 
         def distance(emb1, emb2):
+            """
+            distance
+            Args:
+                emb1: emb1
+                emb2: emb2
+            Returns: distance
+
+            """
             return np.sum(np.square(emb1 - emb2))
 
         distances = []
