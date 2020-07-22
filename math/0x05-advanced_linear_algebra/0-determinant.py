@@ -5,7 +5,13 @@ Determinant function
 
 
 def multi_determinant(matrix):
-
+    """
+    function that computes the determinant of a given matrix of
+    +3D
+    Args:
+        matrix: list of lists whose determinant should be calculated
+    Returns: Determinant of matrix
+    """
     mat_l = len(matrix)
     if mat_l == 2 and len(matrix[0]) == 2:
         return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
