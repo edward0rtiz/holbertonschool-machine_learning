@@ -87,6 +87,8 @@ def minor(matrix):
         raise ValueError("matrix must be a non-empty square matrix")
     if matrix[0] and len(matrix) != len(matrix[0]):
         raise ValueError("matrix must be a non-empty square matrix")
+    if not all([len(mat) == mat_l for mat in matrix]):
+        raise ValueError("matrix must be a non-empty square matrix")
     if mat_l == 1:
         return [[1]]
 
