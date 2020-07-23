@@ -84,7 +84,7 @@ def cofactor(matrix):
         raise ValueError("matrix must be a non-empty square matrix")
     if matrix[0] and len(matrix) != len(matrix[0]):
         raise ValueError("matrix must be a non-empty square matrix")
-    if mat_l == 1:
+    if mat_l == 1 and len(matrix[0]) == 1:
         return [[1]]
     if mat_l == 2 and len(matrix[0]) == 2:
         # apply a "checkerboard" of minuses to the "Matrix of Minors" +-+-
