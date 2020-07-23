@@ -116,6 +116,8 @@ def inverse(matrix):
         raise ValueError("matrix must be a non-empty square matrix")
     if matrix[0] and len(matrix) != len(matrix[0]):
         raise ValueError("matrix must be a non-empty square matrix")
+    if not all(mat_l == len(col) for col in matrix):
+        raise ValueError("matrix must be a non-empty square matrix")
     if mat_l == 1 and len(matrix[0]) == 1:
         return [[1/(matrix[0][0])]]
     if mat_l == 1:
