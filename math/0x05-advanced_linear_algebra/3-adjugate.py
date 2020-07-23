@@ -81,6 +81,8 @@ def adjugate(matrix):
 
     if type(matrix) != list or len(matrix) == 0:
         raise TypeError("matrix must be a list of lists")
+    if not all([type(mat) == list for mat in matrix]):
+        raise TypeError("matrix must be a list of lists")
     if matrix == [[]]:
         raise ValueError("matrix must be a non-empty square matrix")
     if matrix[0] and len(matrix) != len(matrix[0]):
