@@ -101,9 +101,11 @@ def adjugate(matrix):
     # Transpose all elements of the previous matrix
     minor_mat_len = range(len(minor_values))
     minor_mat_len2 = range(len(minor_values[0]))
-    swap = [[minor_values[c][r] for c in minor_mat_len] for r in minor_mat_len2]
+    swap = [[minor_values[c][r] for c in minor_mat_len]
+            for r in minor_mat_len2]
 
     return swap
+
 
 def inverse(matrix):
     """
