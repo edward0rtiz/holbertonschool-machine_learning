@@ -47,6 +47,8 @@ def determinant(matrix):
         return 1
     if mat_l == 1 and len(matrix[0]) == 1:
         return matrix[0][0]
+    if not all(mat_l == len(col) for col in matrix):
+        raise ValueError("matrix must be a square matrix")
     if mat_l == 2 and len(matrix[0]) == 2:
         return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
 
