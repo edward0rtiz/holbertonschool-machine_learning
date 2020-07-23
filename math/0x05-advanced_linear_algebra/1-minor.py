@@ -38,6 +38,20 @@ def determinant(matrix):
         matrix: list of lists whose determinant should be calculated
     Returns: Determinant of matrix
     """
+    mat_l = len(matrix)
+    if type(matrix) != list or len(matrix) == 0:
+        raise TypeError("matrix must be a list of lists")
+    if not all([type(mat) == list for mat in matrix]):
+        raise TypeError("matrix must be a list of lists")
+    if matrix[0] and mat_l != len(matrix[0]):
+        raise ValueError("matrix must be a square matrix")
+    if matrix == [[]]:
+        return 1
+    if mat_l == 1 and len(matrix[0]) == 1:
+        return matrix[0][0]
+    if not all(mat_l == len(col) for col in matrix):
+        raise ValueError("matrix must be a square matrix")
+
     return multi_determinant(matrix)
 
 
