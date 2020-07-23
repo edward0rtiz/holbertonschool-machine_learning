@@ -40,9 +40,9 @@ def determinant(matrix):
     """
     mat_l = len(matrix)
     if type(matrix) != list or len(matrix) == 0:
-        raise TypeError("Matrix must be a list of list")
+        raise TypeError("matrix must be a list of list")
     if matrix[0] and mat_l != len(matrix[0]):
-        raise ValueError("Matrix must be a square matrix")
+        raise ValueError("matrix must be a square matrix")
     if matrix == [[]]:
         return 1
     if mat_l == 1 and len(matrix[0]) == 1:
