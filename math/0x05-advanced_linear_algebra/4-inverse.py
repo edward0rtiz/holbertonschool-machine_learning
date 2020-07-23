@@ -115,7 +115,7 @@ def inverse(matrix):
     mat_l = len(matrix)
 
     if type(matrix) != list or len(matrix) == 0:
-        raise TypeError("matrix must be a list of list")
+        raise TypeError("matrix must be a list of lists")
     if not all([type(m) == list for m in matrix]):
         raise TypeError("matrix must be a list of lists")
     if matrix == [[]]:
@@ -132,5 +132,6 @@ def inverse(matrix):
 
     det = determinant(matrix)
     adjugate_mat = adjugate(matrix)
-    inversed = [[mat_minor / det for mat_minor in row] for row in adjugate_mat]
+    inversed = [[mat_minor / det for mat_minor in row]
+                for row in adjugate_mat]
     return inversed
