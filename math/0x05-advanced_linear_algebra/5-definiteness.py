@@ -2,7 +2,6 @@
 """Definiteness functions"""
 
 import numpy as np
-from numpy import linalg as LA
 
 
 def definiteness(matrix):
@@ -22,7 +21,7 @@ def definiteness(matrix):
     if (matrix.shape[0] != matrix.shape[1]):
         return None
 
-    w, v = LA.eig(matrix)
+    w, v = np.linalg.eig(matrix)
     if np.all(w > 0):
         return "Positive definite"
     if np.all(w >= 0):
