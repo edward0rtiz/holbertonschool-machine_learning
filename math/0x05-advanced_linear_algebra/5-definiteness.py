@@ -22,7 +22,6 @@ def definiteness(matrix):
     if (matrix.shape[0] != matrix.shape[1]):
         return None
 
-    # w eigenvalues, v eigenvectors
     w, v = LA.eig(matrix)
     if np.all(w > 0):
         return "Positive definite"
