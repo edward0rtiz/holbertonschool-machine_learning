@@ -20,6 +20,8 @@ def definiteness(matrix):
         return None
     if (matrix.shape[0] != matrix.shape[1]):
         return None
+    if not np.all(matrix.T == matrix):
+        return None
 
     w, v = np.linalg.eig(matrix)
     if np.all(w > 0):
