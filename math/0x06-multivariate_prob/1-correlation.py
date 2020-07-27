@@ -20,9 +20,9 @@ def correlation(C):
 
     # corr(X) = (diag(Kxx)) -1/2 Kxx (diag(Kxx)) -1/2from
     cov = np.diag(C)
-    std_x = np.sqrt(cov)
-    std_y = std_x
-    std_product = std_x * std_y
+    cov_mat = np.expand_dims(cov, axis=0)
+    std_x = np.sqrt(cov_mat)
+    std_product = np.dot(std_x.T, std_x)
     corr = C / std_product
 
     return corr
