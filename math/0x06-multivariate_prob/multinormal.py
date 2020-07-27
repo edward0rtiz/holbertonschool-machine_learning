@@ -5,7 +5,15 @@ import numpy as np
 
 
 class MultiNormal:
+    """
+    Multinormal class
+    """
     def __init__(self, data):
+        """
+        Init method
+        Args:
+            data: numpy.ndarray of shape (d, n) of the data set
+        """
         if type(data) is not np.ndarray:
             raise TypeError('data must be a 2D numpy.ndarray')
         if len(data.shape) != 2:
