@@ -36,12 +36,12 @@ class MultiNormal():
         Returns:
         """
         if type(x) is not np.ndarray:
-            raise TypeError('x must by a numpy.ndarray')
+            raise TypeError('x must be a numpy.ndarray')
         if len(x.shape) != 2:
-            raise ValueError('x mush have the shape ({}, 1)',
+            raise ValueError('x must have the shape ({}, 1)',
                              format(self.cov.shape[0]))
         if x.shape[1] != 1:
-            raise ValueError('x mush have the shape ({}, 1)',
+            raise ValueError('x must have the shape ({}, 1)',
                              format(self.cov.shape[0]))
         X_mean = x - self.mean
 
