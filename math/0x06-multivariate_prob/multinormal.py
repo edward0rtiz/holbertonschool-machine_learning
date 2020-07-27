@@ -46,7 +46,7 @@ class MultiNormal():
         X_mean = x - self.mean
 
         d = self.cov.shape[0]
-        p_a = 1. / (np.sqrt((2 * np.pi) ** d * np.linalg.det(self.cov)))
+        p_a = 1 / (np.sqrt((2 * np.pi) ** d * np.linalg.det(self.cov)))
         p_b = (np.exp(-(np.linalg.solve(self.cov, X_mean).T.dot(X_mean)) / 2))
         pdf = float(p_a * p_b)
 
