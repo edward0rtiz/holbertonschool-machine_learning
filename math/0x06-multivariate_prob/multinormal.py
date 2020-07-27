@@ -54,7 +54,7 @@ class MultiNormal():
         inv = np.linalg.inv(self.cov)
         p_a = 1 / np.sqrt(((2 * np.pi) ** d) * det)
         p_b1 = np.dot(-(X_mean).T, inv)
-        p_b2 = np.dot(p_b1, (X_mean) / 2)
+        p_b2 = np.dot(p_b1, X_mean / 2)
         p_c = np.exp(p_b2)
         pdf = float(p_a * p_c)
         return pdf
