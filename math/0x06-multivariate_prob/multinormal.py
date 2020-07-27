@@ -4,7 +4,7 @@
 import numpy as np
 
 
-class MultiNormal:
+class MultiNormal():
     """
     Multinormal class
     """
