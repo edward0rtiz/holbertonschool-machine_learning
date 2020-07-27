@@ -22,7 +22,7 @@ def correlation(C):
     cov = np.diag(C)
     std_x = np.sqrt(cov)
     std_y = std_x
-    std_product = np.outer(std_x, std_y)
+    std_product = std_x * std_y
     corr = C / std_product
 
     return corr
