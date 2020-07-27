@@ -20,8 +20,8 @@ def mean_cov(X):
         raise ValueError('X must contain multiple data points')
 
     mean = np.mean(X, axis=0).reshape(1, d)
-    X_mean = X - mean
+    X= X - mean
 
-    cov = np.dot(X_mean.T, X_mean) / (n - 1)
+    cov = np.dot(X.T, X) / (n - 1)
 
     return mean, cov
