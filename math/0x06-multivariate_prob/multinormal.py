@@ -24,4 +24,4 @@ class MultiNormal:
         d, n = data.shape
         self.mean = np.mean(data, axis=1, keepdims=True)
         X_mean = data - self.mean
-        self.cov = np.matmul(X_mean, X_mean.T) / (n - 1)
+        self.cov = np.dot(X_mean, X_mean.T) / (n - 1)
