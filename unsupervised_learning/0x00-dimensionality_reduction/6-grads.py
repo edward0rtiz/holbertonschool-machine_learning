@@ -4,6 +4,7 @@
 import numpy as np
 Q_affinities = __import__('5-Q_affinities').Q_affinities
 
+
 def grads(Y, P):
     """
     Calculate the gradients of Y
@@ -22,13 +23,16 @@ def grads(Y, P):
     Q, num = Q_affinities(Y)
     dY = np.zeros((n, ndim))
 
+    # for i in range(n):
+    #    dY[i, :] = np.sum(np.tile(PQ[:, i] * num[:, i],
+    #    (ndim, 1)).T * (Y[i, :] - Y), 0)
+    # return (dY, Q)
     PQ = P - Q
-    #for i in range(n):
-    #    dY[i, :] = np.sum(np.tile(PQ[:, i] * num[:, i], (ndim, 1)).T * (Y[i, :] - Y), 0)
-    #return (dY, Q)
+    PQ_expanded = np.expand_dims((PQ * num).T, axis=2)
 
-    PQ_expanded = np.expand_dims((PQ * num).T, axis=-1)
-    y_diff = np.expand_dims(Y, 1) - np.expand_dims(Y, 0)
-    dY = 4. * (PQ_expanded * y_diff).sum(1)
+    for i in range(n):
+        y_diff = Y[i, :] - Y
+        # dY[i, :] = 4. * (PQ_expanded * y_diff).sum(1)
+        dY[i, :] = np.sum((PQ_expanded[i, :] * y_diff), 0)
 
     return dY, Q
