@@ -30,17 +30,17 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
             if Hdiff > 0:
                 b_min = betas[i, 0]
                 if b_max is None:
-                    betas[i] = betas[i] * 2
+                    betas[i, 0] = betas[i, 0] * 2
                 else:
-                    betas[i] = (betas[i] + b_max) / 2
+                    betas[i, 0] = (betas[i, 0] + b_max) / 2
             else:
                 b_max = betas[i, 0]
                 if b_min is None:
-                    betas[i] = betas[i] / 2
+                    betas[i, 0] = betas[i, 0] / 2
                 else:
-                    betas[i] = (betas[i] + b_min) / 2
+                    betas[i, 0] = (betas[i, 0] + b_min) / 2
 
-            Hi, Pi = HP(row, betas[i])
+            Hi, Pi = HP(row, betas[i, 0])
             Hdiff = Hi - H
         Pi = np.insert(Pi, i, 0)
         P[i] = Pi
