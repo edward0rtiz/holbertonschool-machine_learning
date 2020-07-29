@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Shannon entropy and P affinities"""
 
-import numpy as np
 P_init = __import__('2-P_init').P_init
 HP = __import__('3-entropy').HP
+import numpy as np
 
 
 def P_affinities(X, tol=1e-5, perplexity=30.0):
