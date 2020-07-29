@@ -16,11 +16,11 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
         perplexity:
     Returns:
     """
-    (n, d) = X.shape
+    (n, _) = X.shape
     D, P, betas, H = P_init(X, perplexity)
 
     for i in range(n):
-        row = D[i].copy()
+        row = D[i]
         row = np.delete(row, i, axis=0)
         Hi, Pi = HP(row, betas[i])
         Hdiff = Hi - H
