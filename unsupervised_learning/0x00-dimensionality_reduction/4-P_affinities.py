@@ -43,7 +43,7 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
                 else:
                     betas[i, 0] = (betas[i, 0] + b_min) / 2.
 
-            Hi, Pi = HP(row, betas[i, 0])
+            Hi, Pi = HP(row, betas[i])
             Hdiff = Hi - H
         Pi = np.insert(Pi, i, 0)
         P[i] = Pi
