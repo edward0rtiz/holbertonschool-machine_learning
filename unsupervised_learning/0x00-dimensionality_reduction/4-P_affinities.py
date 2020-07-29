@@ -20,12 +20,12 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
     D, P, betas, H = P_init(X, perplexity)
 
     for i in range(n):
+        b_max = None
+        b_min = None
         row = D[i].copy()
         row = np.delete(row, i, axis=0)
         Hi, Pi = HP(row, betas[i, 0])
         Hdiff = Hi - H
-        b_max = None
-        b_min = None
         while np.abs(Hdiff) > tol:
             if Hdiff > 0:
                 b_min = betas[i, 0]
