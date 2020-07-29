@@ -16,32 +16,33 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
         perplexity:
     Returns:
     """
-    n, _ = X.shape
+    (n, d) = X.shape
     D, P, betas, H = P_init(X, perplexity)
+
     for i in range(n):
-        high = None
-        low = None
-        Di = np.delete(D[i], i, axis=0)
-        Hi, Pi = HP(Di, betas[i])
-        diff = Hi - H
-        # binary search
-        while np.abs(diff) > tol:
-            if diff > 0:
-                low = betas[i, 0]
-                if high is None:
+        row = D[i].copy()
+        row = np.delete(row, i, axis=0)
+        Hi, Pi = HP(row, betas[i, 0])
+        Hdiff = Hi - H
+        b_max = None
+        b_min = None
+        while np.abs(Hdiff) > tol:
+            if Hdiff > 0:
+                b_min = betas[i, 0]
+                if b_max is None:
                     betas[i, 0] = betas[i, 0] * 2
                 else:
-                    betas[i, 0] = (betas[i, 0] + high) / 2
+                    betas[i, 0] = (betas[i, 0] + b_max) / 2
             else:
-                high = betas[i, 0]
-                if low is None:
+                b_max = betas[i, 0]
+                if b_min is None:
                     betas[i, 0] = betas[i, 0] / 2
                 else:
-                    betas[i, 0] = (betas[i, 0] + low) / 2
-            Hi, Pi = HP(Di, betas[i])
-            diff = Hi - H
+                    betas[i, 0] = (betas[i, 0] + b_min) / 2
+
+            Hi, Pi = HP(row, betas[i, 0])
+            Hdiff = Hi - H
         Pi = np.insert(Pi, i, 0)
         P[i] = Pi
-    # simmetric
-    P = (P + P.T)/(2*n)
-    return(P)
+    P = (P.T + P) / (2 * n)
+    return P
