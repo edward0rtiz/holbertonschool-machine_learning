@@ -20,14 +20,25 @@ def P_init(X, perplexity):
             that will contain all of the beta values
             H: is the Shannon entropy for perplexity perplexity
     """
-    n, d = X.shape
+
+    n = X.shape[0]
     # e distance for all pairs of points in input matrix X
     # ||Xi - Xj|| ** 2
-    sum_X = np.sum(np.square(X), 1)
+    sum_X = np.sum(np.square(X), axis=1)
     # exp(-||Yi - Yj|| ** 2)
-    D = (np.add(np.add(-2 * np.dot(X, X.T), sum_X).T, sum_X))
+    D = (np.add(np.add(-2 * np.matmul(X, X.T), sum_X).T, sum_X))
     P = np.zeros((n, n))
     betas = np.ones((n, 1))
     #
     H = np.log2(perplexity)
-    return (D, P, betas, H)
+    return D, P, betas, H
+
+    """n = X.shape[0]
+    X1 = X[np.newaxis, :, :]
+    X2 = X[:, np.newaxis, :]
+    X = np.square(X1 - X2)
+    D = X.sum(axis=2)
+    P = np.zeros((n, n))
+    betas = np.ones((n, 1))
+    H = np.log2(perplexity)
+    return D, P, betas, H"""
