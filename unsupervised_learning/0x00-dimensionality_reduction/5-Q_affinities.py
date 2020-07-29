@@ -16,10 +16,7 @@ def Q_affinities(Y):
              num: is a numpy.ndarray of shape (n, n) containing
                   the numerator of the Q affinities
     """
-    n, ndim = Y.shape
-    print(ndim)
     sum_Y = np.sum(np.square(Y), 1)
-    print(sum_Y)
     numerator = -2. * np.dot(Y, Y.T)
     numerator = 1. / (1. + np.add(np.add(numerator, sum_Y).T, sum_Y))
     np.fill_diagonal(numerator, 0)
