@@ -23,25 +23,12 @@ def grads(Y, P):
     Q, num = Q_affinities(Y)
     dY = np.zeros((n, ndim))
 
-    # for i in range(n):
-    #    dY[i, :] = np.sum(np.tile(PQ[:, i] * num[:, i],
-    #    (ndim, 1)).T * (Y[i, :] - Y), 0)
-    # return (dY, Q)
     PQ = P - Q
-    # print("&&&&&&&&&&&&")
-    # print(PQ)
+    # y.T = y.T-n − n dC/dYi
     PQ_expanded = np.expand_dims((PQ * num).T, axis=2)
-
-    # print("//////////////")
-    # print(PQ_expanded)
-
-    # y_diff = np.expand_dims(Y, 1) - Y
-    # print('***************')
-    # print(y_diff.shape)
 
     for i in range(n):
         y_diff = Y[i, :] - Y
-        # dY[i, :] = 4. * (PQ_expanded * y_diff).sum(1)
+        # dC / dY[i, :] = 4. * (sum((pij - qij) * (yi - yj))
         dY[i, :] = np.sum((PQ_expanded[i, :] * y_diff), 0)
-
     return dY, Q
