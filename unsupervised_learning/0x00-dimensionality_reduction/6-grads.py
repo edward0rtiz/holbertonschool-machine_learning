@@ -28,7 +28,16 @@ def grads(Y, P):
     #    (ndim, 1)).T * (Y[i, :] - Y), 0)
     # return (dY, Q)
     PQ = P - Q
+    # print("&&&&&&&&&&&&")
+    # print(PQ)
     PQ_expanded = np.expand_dims((PQ * num).T, axis=2)
+
+    # print("//////////////")
+    # print(PQ_expanded)
+
+    # y_diff = np.expand_dims(Y, 1) - Y
+    # print('***************')
+    # print(y_diff.shape)
 
     for i in range(n):
         y_diff = Y[i, :] - Y
