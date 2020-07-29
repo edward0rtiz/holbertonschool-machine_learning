@@ -44,5 +44,5 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
             Hdiff = Hi - H
         Pi = np.insert(Pi, i, 0)
         P[i] = Pi
-    P = (P + P.T) / (2 * n)
+    P = (P.T + P) / (2 * n)
     return P
