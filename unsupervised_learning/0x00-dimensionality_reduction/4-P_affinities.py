@@ -28,13 +28,13 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
         b_min = None
         while np.abs(Hdiff) > tol:
             if Hdiff > 0:
-                b_min = betas[i].copy()
+                b_min = betas[i, 0]
                 if b_max is None:
                     betas[i, 0] = betas[i, 0] * 2
                 else:
                     betas[i, 0] = (betas[i, 0] + b_max) / 2
             else:
-                b_max = betas[i].copy()
+                b_max = betas[i, 0]
                 if b_min is None:
                     betas[i, 0] = betas[i, 0] / 2
                 else:
