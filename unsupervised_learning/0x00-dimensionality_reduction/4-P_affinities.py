@@ -20,7 +20,7 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
     D, P, betas, H = P_init(X, perplexity)
 
     for i in range(n):
-        row = D[i].copy()
+        row = D[i]
         row = np.delete(row, i, axis=0)
         Hi, Pi = HP(row, betas[i, 0])
         Hdiff = Hi - H
