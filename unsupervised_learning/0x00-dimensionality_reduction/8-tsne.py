@@ -26,7 +26,9 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
     n, d = X.shape
     initial_momentum = 0.5
     final_momentum = 0.8
+    min_gain = 0.01
 
+    gains = np.ones((n, ndims))
     X = pca(X, idims)
     P = P_affinities(X, perplexity=perplexity)
     Y = np.random.rand(n, ndims)
@@ -43,14 +45,19 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
         else:
             momentum = final_momentum
 
-        iY = momentum * iY - lr * dY
+        # delta-bar-delta algorithm for SDG optional
+        gains = (gains + 0.2) * ((dY > 0.) != (iY > 0.)) + \
+                (gains * 0.8) * ((dY > 0.) == (iY > 0.))
+        gains[gains < min_gain] = min_gain
+
+        iY = momentum * iY - lr * (gains * dY)
         Y = Y + iY
         Y = Y - np.tile(np.mean(Y, 0), (n, 1))
 
         if (i + 1) % 100 == 0:
             C = cost(P, Q)
             print('Cost at iteration {}: {}'.format((i+1), C))
-        if (i + 1) == 100:
+        if i == 100:
             P = P / 4.
 
     return Y
