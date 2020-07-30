@@ -33,8 +33,8 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
     X = pca(X, idims)
     P = P_affinities(X, perplexity=perplexity)
     Y = np.random.rand(n, ndims)
-    iY = np.zeros((n, ndims))
-
+    #iY = np.zeros((n, ndims))
+    iY = Y
     # early exaggeration
     P = P * 4.
 
@@ -51,7 +51,8 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
                 (gains * 0.8) * ((dY > 0.) == (iY > 0.))
         gains[gains < min_gain] = min_gain"""
 
-        iY = momentum * iY - lr * (gains * dY)
+        #iY = momentum * iY - lr * (gains * dY)
+        iY = momentum * iY - lr * dY
         Y = Y + iY
         Y = Y - np.tile(np.mean(Y, 0), (n, 1))
 
