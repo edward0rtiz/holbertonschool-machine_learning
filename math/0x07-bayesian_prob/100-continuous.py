@@ -2,6 +2,7 @@
 """Coninuous posterior"""
 
 from scipy import math, special
+import numpy as np
 
 
 def posterior(x, n, p1, p2):
@@ -34,10 +35,12 @@ def posterior(x, n, p1, p2):
                                         special.factorial(n - x))) \
                * (P ** x) * ((1 - P) ** (n - x))
 
-    like = likelihood(x, n, (p1 - p2))
-    Pr = (p1 - p2)
+    P = (x - (p1 + p2)) / (n - (p1 + p2))
+    like = likelihood(x, n, P)
+    Pr = p1 - p2
+
     intersection = like * Pr
-    marginal = intersection + intersection
+    marginal = np.sum(intersection)
     pos = intersection / marginal
 
-    return pos
+    return (pos)
