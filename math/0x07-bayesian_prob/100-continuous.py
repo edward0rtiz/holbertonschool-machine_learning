@@ -38,7 +38,7 @@ def posterior(x, n, p1, p2):
     P = (x - (p1 + p2)) / (n - (p1 + p2))
 
     like = likelihood(x, n, P)
-    Pr = p2 - p1
+    Pr = 1
     intersection = like * Pr
     marginal = np.sum(intersection)
     pos = intersection / marginal
