@@ -44,7 +44,7 @@ def posterior(x, n, p1, p2):
         raise ValueError('All values in p2 must be in the range [0, 1]')
     if p2 <= p1:
         raise ValueError('p2 must be greater than p1')
-    P = (p2 - p1) / 2
+    P = (p2 + p1) / 2
     Pr = p2 - p1
     pos = intersection(x, n, P, Pr) / marginal(x, n, P, Pr)
     return pos
