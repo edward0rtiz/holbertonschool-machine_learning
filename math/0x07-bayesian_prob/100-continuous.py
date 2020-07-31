@@ -4,12 +4,6 @@
 from scipy import math, special
 
 
-def likelihood(x, n, P):
-    return (special.factorial(n) / (special.factorial(x) *
-                                    special.factorial(n - x))) * (P ** x) * \
-           ((1 - P) ** (n - x))
-
-
 def posterior(x, n, p1, p2):
     if not isinstance(n, int) or n < 1:
         raise ValueError("n must be a positive integer")
@@ -24,6 +18,11 @@ def posterior(x, n, p1, p2):
         raise ValueError("{} must be a float in the range [0, 1]".format(p2))
     if p2 <= p1:
         raise ValueError("p2 must be greater than p1")
+
+    def likelihood(x, n, P):
+        return (special.factorial(n) / (special.factorial(x) *
+                                        special.factorial(n - x))) * (P ** x) * \
+               ((1 - P) ** (n - x))
 
     like = likelihood(x, n, (p1 - p2))
     Pr = (p1 - p2) / 2
