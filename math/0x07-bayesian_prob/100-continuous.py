@@ -5,6 +5,16 @@ from scipy import math, special
 
 
 def posterior(x, n, p1, p2):
+    """
+    continuous posterior
+    Args:
+        x: the number of patients that develop severe side effects
+        n:  the total number of patients observed
+        p1: he lower bound on the range
+        p2: the upper bound on the range
+    Returns: posterior probability that p is within the range
+            [p1, p2] given x and n
+    """
     if not isinstance(n, int) or n < 1:
         raise ValueError("n must be a positive integer")
     if not isinstance(x, int) or x < 0:
