@@ -2,7 +2,6 @@
 """Coninuous posterior"""
 
 from scipy import math, special
-import numpy as np
 
 
 def likelihood(x, n, P):
