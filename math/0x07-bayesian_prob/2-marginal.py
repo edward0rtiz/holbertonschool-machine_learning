@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Intersection"""
+"""Marginal"""
 
 import numpy as np
 intersection = __import__('1-intersection').intersection
