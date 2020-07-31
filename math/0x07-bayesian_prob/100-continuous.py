@@ -42,4 +42,4 @@ def posterior(x, n, p1, p2):
     marginal = np.sum(intersection)
     pos = intersection / marginal
 
-    return 0.6098093274896035
+    return pos
