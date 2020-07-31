@@ -35,8 +35,7 @@ def posterior(x, n, p1, p2):
                                         special.factorial(n - x))) \
                * (P ** x) * ((1 - P) ** (n - x))
 
-    # P = (x - (p1 + p2)) / (n - (p1 + p2))
-    P = special.binom(p1, p2)
+    P = (x - (p1 + p2)) / (n - (p1 + p2))
 
     like = likelihood(x, n, P)
     Pr = p2 - p1
