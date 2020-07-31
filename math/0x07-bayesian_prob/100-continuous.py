@@ -2,7 +2,6 @@
 """Posterior"""
 
 import numpy as np
-from scipy import math, special
 
 
 def intersection(x, n, P, Pr):
