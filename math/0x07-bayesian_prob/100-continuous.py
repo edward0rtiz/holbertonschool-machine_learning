@@ -2,6 +2,11 @@
 """Coninuous posterior"""
 
 from scipy import math, special
+import numpy as np
+
+
+def likelihood(x, n, P):
+    return (special.factorial(n) / (special.factorial(x) * special.factorial(n - x))) * (P ** x) * ((1 - P) ** (n - x))
 
 
 def posterior(x, n, p1, p2):
@@ -18,4 +23,10 @@ def posterior(x, n, p1, p2):
         raise ValueError("{} must be a float in the range [0, 1]".format(p2))
     if p2 <= p1:
         raise ValueError("p2 must be greater than p1")
-    return 0.6098093274896035
+
+    like = likelihood(x, n, (p1 - p2))
+    Pr = (p1 -p2) / 2
+    intersection = like * Pr
+    marginal = intersection + intersection
+    pos = intersection / marginal
+    return pos
