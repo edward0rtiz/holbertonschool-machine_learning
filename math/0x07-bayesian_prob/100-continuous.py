@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Coninuous posterior"""
 
+from scipy import math, special
+
 
 def posterior(x, n, p1, p2):
     if not isinstance(n, int) or n < 1:
