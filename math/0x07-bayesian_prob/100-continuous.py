@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Coninuous posterior"""
 
-from scipy import math, special
+from scipy import special
 import numpy as np
 
 
