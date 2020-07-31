@@ -32,7 +32,8 @@ def intersection(x, n, P, Pr):
             "Pr must be a numpy.ndarray with the same shape as P")
     if not np.all((Pr >= 0) & (Pr <= 1)):
         raise ValueError('All values in Pr must be in the range [0, 1]')
-    if not np.isclose((np.sum(Pr), 1)):
+    sum = np.sum(Pr)
+    if not np.isclose(sum, 1):
         raise ValueError('Pr must sum to 1')
 
     numerator = np.math.factorial(n)
