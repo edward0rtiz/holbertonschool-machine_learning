@@ -36,5 +36,6 @@ def marginal(x, n, P, Pr):
     sum = np.sum(Pr)
     if not np.isclose(sum, 1):
         raise ValueError('Pr must sum to 1')
+
     inter = intersection(x, n, P, Pr)
     return np.sum(inter)
