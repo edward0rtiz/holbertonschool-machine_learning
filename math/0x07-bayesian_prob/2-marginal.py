@@ -14,8 +14,7 @@ def marginal(x, n, P, Pr):
         P: 1D numpy.ndarray containing the various hypothetical probabilities
            of developing severe side effects
         Pr: 1D numpy.ndarray containing the prior beliefs of P
-    Returns: 1D numpy.ndarray containing the intersection of obtaining x and n
-             with each probability in P, respectively
+    Returns: the marginal probability of obtaining x and n
     """
     if not isinstance(n, int) or (n <= 0):
         raise ValueError('n must be a positive integer')
