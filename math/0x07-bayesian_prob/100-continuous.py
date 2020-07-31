@@ -40,7 +40,7 @@ def posterior(x, n, p1, p2):
     Pr = p2 - p1
 
     intersection = like * Pr
-    marginal = intersection + intersection
+    marginal = np.sum(intersection)
     pos = intersection / marginal
 
     return (pos)
