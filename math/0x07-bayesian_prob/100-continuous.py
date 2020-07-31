@@ -21,8 +21,8 @@ def posterior(x, n, p1, p2):
 
     def likelihood(x, n, P):
         return (special.factorial(n) / (special.factorial(x) *
-                                        special.factorial(n - x))) * (P ** x) * \
-               ((1 - P) ** (n - x))
+                                        special.factorial(n - x))) \
+               * (P ** x) * ((1 - P) ** (n - x))
 
     like = likelihood(x, n, (p1 - p2))
     Pr = (p1 - p2) / 2
