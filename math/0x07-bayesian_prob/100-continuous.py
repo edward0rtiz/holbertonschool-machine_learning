@@ -30,7 +30,7 @@ def posterior(x, n, p1, p2):
     if p2 <= p1:
         raise ValueError("p2 must be greater than p1")
 
-    def likelihood(x, n, P):
+    """def likelihood(x, n, P):
         return (special.factorial(n) / (special.factorial(x) *
                                         special.factorial(n - x))) \
                * (P ** x) * ((1 - P) ** (n - x))
@@ -38,9 +38,12 @@ def posterior(x, n, p1, p2):
     P = (x - (p1 + p2)) / (n - (p1 + p2))
 
     like = likelihood(x, n, P)
-    Pr = 1
+    Pr = special.beta(1, 1)
     intersection = like * Pr
     marginal = np.sum(intersection)
     pos = intersection / marginal
-
+    """
+    b1 = special.btdtr(x + 1, n - x + 1, p1)
+    b2 = special.btdtr(x + 1, n - x + 1, p2)
+    pos = b2 - b1
     return pos
