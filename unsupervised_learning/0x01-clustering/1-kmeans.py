@@ -60,7 +60,5 @@ def kmeans(X, k, iterations=1000):
 
         if (centroids == C).all():
             break
-        else:
-            C = centroids
 
     return C, clss
