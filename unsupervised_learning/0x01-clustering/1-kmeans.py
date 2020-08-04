@@ -27,7 +27,6 @@ def kmeans(X, k, iterations=1000):
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None
 
-
     # Setting min and max values per col
     n, d = X.shape
     X_min = X.min(axis=0)
@@ -39,13 +38,13 @@ def kmeans(X, k, iterations=1000):
     # Loop for the maximum number of iterations
     for i in range(iterations):
 
-        # initializes k centroids by randomly selecting them from the data points
+        # initializes k centroids by selecting them from the data points
         centroids = np.copy(C)
         centroids_extended = centroids[:, np.newaxis]
 
         # distances also know as euclidean distance
         distances = np.sqrt(((X - centroids_extended) ** 2).sum(axis=2))
-        # returns an array containing the index to the nearest centroid for each point
+        # an array containing the index to the nearest centroid for each point
         clss = np.argmin(distances, axis=0)
 
         # Assign all points to the nearest centroid
