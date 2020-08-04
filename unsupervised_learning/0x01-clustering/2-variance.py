@@ -17,7 +17,7 @@ def variance(X, C):
         return None
     if not isinstance(C, np.ndarray) or len(C.shape) != 2:
         return None
-    if X.shape != C.shape:
+    if X.shape[1] != C.shape[1]:
         return None
 
     n, d = X.shape
