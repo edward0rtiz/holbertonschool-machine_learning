@@ -40,7 +40,7 @@ def kmeans(X, k, iterations=1000):
 
         # initializes k centroids by selecting them from the data points
         centroids = np.copy(C)
-        centroids_extended = centroids[:, np.newaxis]
+        centroids_extended = C[:, np.newaxis]
 
         # distances also know as euclidean distance
         distances = np.sqrt(((X - centroids_extended) ** 2).sum(axis=2))
@@ -54,7 +54,7 @@ def kmeans(X, k, iterations=1000):
             else:
                 C[c] = X[clss == c].mean(axis=0)
 
-        centroids_extended = centroids[:, np.newaxis]
+        centroids_extended = C[:, np.newaxis]
         distances = np.sqrt(((X - centroids_extended) ** 2).sum(axis=2))
         clss = np.argmin(distances, axis=0)
 
