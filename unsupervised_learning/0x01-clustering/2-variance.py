@@ -3,14 +3,22 @@
 
 import numpy as np
 
+
 def variance(X, C):
     """
     Calculate the total intra-cluste variance for a data set
     Args:
         X: numpy.ndarray of shape (n, d) containing the data set
-        C: numpy.ndarray of shape (k, d) containing the centroid means for each cluster
+        C: numpy.ndarray of shape (k, d) containing the centroid means
+           for each cluster
     Returns: Var or None on failure
     """
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None
+    if not isinstance(C, np.ndarray) or len(C.shape) != 2:
+        return None
+    if X.shape != C.shape:
+        return None
 
     n, d = X.shape
 
