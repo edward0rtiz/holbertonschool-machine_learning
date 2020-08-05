@@ -33,11 +33,18 @@ def pdf(X, m, S):
     inv_S = np.linalg.inv(S)
 
     # Formula Section one: (1 √(2π)d|Σ|)
-    part_1 = (1 / np.sqrt((2 * np.pi) ** d * det_S))
-    print(part_1)
-    part_2 = - 0.5 * (np.dot(x_m, inv_S).T.dot(x_m))
+    part_1 = 1 / np.sqrt((2 * np.pi) ** d * det_S)
 
-    pdf = part_1 * np.exp(part_2)
+    # Formula Section two_upper_1: −1/2(x−μ)T
+    part_2 = np.dot((-x_m / 2), inv_S)
 
+    # Formula Section two_upper_2: Σ−1(x−μ) used diagonal to fix alloc err
+    part_2_1 = np.dot(part_2, x_mT).diagonal()
+
+    # Formula Section two exp(−1/2(x−μ)T Σ−1(x−μ))
+    part_2_2 = np.exp(part_2_1)
+
+    # pdf = part_1 * part_2_2:
+    pdf = part_1 * part_2_2
     P = np.where(pdf < 1e-300, 1e-300, pdf)
     return P
