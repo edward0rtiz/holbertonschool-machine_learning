@@ -18,6 +18,16 @@ def pdf(X, m, S):
                 data point.
                 All values in P should have a minimum value of 1e-300
     """
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None
+    if not isinstance(m, np.ndarray) or len(m.shape) != 1:
+        return None
+    if not isinstance(S, np.ndarray) or len(S.shape) != 2:
+        return None
+    if X.shape[1] != m.shape[0] or X.shape[1] != S.shape[0]:
+        return None
+    if S.shape[0] != S.shape[1]:
+        return None
 
     # formula
     # p(x∣ μ,Σ) = (1 √(2π)d|Σ|)exp(−1/2(x−μ)T Σ−1(x−μ))
