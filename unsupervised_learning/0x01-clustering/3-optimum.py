@@ -23,28 +23,31 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
              d_vars: list containing the difference in variance from
                      the smallest cluster size for each cluster size
     """
-    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None, None
-    if not isinstance(iterations, int) or iterations <= 0:
-        return None, None
-    if kmax is not None and (type(kmax) is not int or kmax < 1):
-        return None, None
-    if kmax is not None and kmin >= kmax:
-        return None, None
-    if kmax is None:
-        kmax = X.shape[0]
+    try:
+        if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+            return None, None
+        if not isinstance(iterations, int) or iterations <= 0:
+            return None, None
+        if kmax is not None and (type(kmax) is not int or kmax < 1):
+            return None, None
+        if kmax is not None and kmin >= kmax:
+            return None, None
+        if kmax is None:
+            kmax = X.shape[0]
 
-    _ = X.shape
+        _ = X.shape
 
-    results = []
-    d_vars = []
-    minimun_k, _ = kmeans(X, kmin)
-    variance_k = variance(X, minimun_k)
-    for k in range(kmin, kmax + 1):
-        cluster, clss = kmeans(X, k, iterations)
-        results.append((cluster, clss))
-        variance_d = variance(X, cluster)
-        if k == kmin:
-            variance_k = variance_d
-        d_vars.append(variance_k - variance_d)
-    return results, d_vars
+        results = []
+        d_vars = []
+        minimun_k, _ = kmeans(X, kmin)
+        variance_k = variance(X, minimun_k)
+        for k in range(kmin, kmax + 1):
+            cluster, clss = kmeans(X, k, iterations)
+            results.append((cluster, clss))
+            variance_d = variance(X, cluster)
+            if k == kmin:
+                variance_k = variance_d
+            d_vars.append(variance_k - variance_d)
+        return results, d_vars
+    except Exception:
+        return None, None
