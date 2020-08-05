@@ -30,10 +30,12 @@ def expectation(X, pi, m, S):
         return None, None
     if not isinstance(S, np.ndarray) or len(S.shape) != 3:
         return None, None
-
+    if not np.isclose([np.sum(pi)], [1])[0]:
+        return None, None
 
     n, d = X.shape
     k = pi.shape[0]
+
     centroids_mean = m
     covariance_mat = S
     gauss_components = np.zeros((k, n))
