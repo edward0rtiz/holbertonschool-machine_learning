@@ -35,12 +35,14 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         if kmax is None:
             kmax = X.shape[0]
 
+        _ = X.shape
+
         results = []
         d_vars = []
         minimun_k, _ = kmeans(X, kmin)
         variance_k = variance(X, minimun_k)
         for k in range(kmin, kmax + 1):
-            cluster, clss = kmeans(X, k)
+            cluster, clss = kmeans(X, k, iterations)
             results.append((cluster, clss))
             variance_d = variance(X, cluster)
             if k == kmin:
