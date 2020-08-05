@@ -40,7 +40,7 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
 
         results = []
         d_vars = []
-        minimun_k, _ = kmeans(X, kmin)
+        #minimun_k, _ = kmeans(X, kmin)
         # variance_k = variance(X, minimun_k)
         for k in range(kmin, kmax + 1):
             cluster, clss = kmeans(X, k, iterations)
@@ -48,8 +48,8 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
             variance_d = variance(X, cluster)
             if k == kmin:
                 variance_k = variance_d
-            var = variance(X, cluster)
-            d_vars.append(variance_k - var)
+            #var = variance(X, cluster)
+            d_vars.append(variance_k - variance_d)
         return results, d_vars
     except Exception:
         return None, None
