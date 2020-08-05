@@ -43,6 +43,8 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
             cluster, clss = kmeans(X, k)
             results.append((cluster, clss))
             variance_d = variance(X, cluster)
+            if k == kmin:
+                variance_k = variance_d
             d_vars.append(variance_k - variance_d)
         return results, d_vars
     except Exception:
