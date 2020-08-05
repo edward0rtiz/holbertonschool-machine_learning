@@ -19,6 +19,7 @@ def initialize(X, k):
             s: numpy.ndarray of shape (k, d, d) containing the covariance
                matrices for each cluster, initialized as identity matrices
     """
+
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None
     if not isinstance(k, int) or k < 1:
