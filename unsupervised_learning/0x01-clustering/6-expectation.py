@@ -35,6 +35,8 @@ def expectation(X, pi, m, S):
 
     n, d = X.shape
     k = pi.shape[0]
+    if k > n:
+        return None, None
 
     centroids_mean = m
     covariance_mat = S
