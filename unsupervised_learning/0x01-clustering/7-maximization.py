@@ -25,8 +25,6 @@ def maximization(X, g):
         return None, None, None
     if not isinstance(g, np.ndarray) or len(X.shape) != 2:
         return None, None, None
-    if X.shape[0] != g.shape[1]:
-        return None, None, None
 
     gaussian_components = g
 
