@@ -45,13 +45,11 @@ def maximization(X, g):
         mu_down = np.sum(gaussian_components[i], axis=0)
         centroid_updated[i] = mu_up / mu_down
 
-
         # Sigma components
         x_m = X - centroid_updated[i]
         sigma_up = np.dot(gaussian_components[i] * x_m.T, x_m)
         sigma_down = np.sum(gaussian_components[i])
         covariance_updated[i] = sigma_up / sigma_down
-
 
         # Pi =  priors after computing derivation of sigma and mu
         # Formula: P(j) = n(j) / n = Σn i=1 P(j|i) / n
