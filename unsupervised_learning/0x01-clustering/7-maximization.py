@@ -21,6 +21,10 @@ def maximization(X, g):
              S: numpy.ndarray of shape (k, d, d) containing the updated
                 covariance matrices for each cluster
     """
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None, None, None
+    if not isinstance(g, np.ndarray) or len(X.shape) != 2:
+        return None, None, None
 
     gaussian_components = g
 
