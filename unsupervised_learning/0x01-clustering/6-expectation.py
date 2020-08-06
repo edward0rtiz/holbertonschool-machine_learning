@@ -50,7 +50,7 @@ def expectation(X, pi, m, S):
         likelihood = pdf(X, centroids_mean[i], covariance_mat[i])
         prior = pi[i]
         gauss_components[i] = likelihood * prior
-    g = gauss_components / np.sum(gauss_components, axis=0)
+    g = gauss_components / np.sum(gauss_components, axis=0, keepdims=True)
 
     # https://zhiyzuo.github.io/EM/
     # Log likelihood: ∑i ln ∑z^i p((x^i) , (z^i);Θ)
