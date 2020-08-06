@@ -29,11 +29,11 @@ def maximization(X, g):
     gaussian_components = g
 
     k = gaussian_components.shape[0]
-    # print(X.shape[0])
-    # print('####')
-    # print(gaussian_components.shape[1])
-
     n, d = X.shape
+
+    posterior_prob = gaussian_components.shape[0]
+    if posterior_prob != X.shape[0]:
+        return None, None, None
 
     # pi
     priors = np.zeros((k,))
