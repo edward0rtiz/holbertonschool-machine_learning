@@ -25,11 +25,17 @@ def maximization(X, g):
         return None, None, None
     if not isinstance(g, np.ndarray) or len(X.shape) != 2:
         return None, None, None
+    if X.shape[0] != g.shape[1]:
+        return None, None, None
 
     gaussian_components = g
 
-    n, d = X.shape
     k = gaussian_components.shape[0]
+    # print(X.shape[0])
+    # print('####')
+    # print(gaussian_components.shape[1])
+
+    n, d = X.shape
 
     # pi
     priors = np.zeros((k,))
