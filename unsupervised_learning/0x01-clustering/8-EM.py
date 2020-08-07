@@ -68,4 +68,4 @@ def expectation_maximization(X,
                 break
         if abs(loglikelihood - loglikelihood_new) <= tol:
             break
-    return pi, m, S, g, loglikelihood
+    return pi, m, S, g, loglikelihood_new
