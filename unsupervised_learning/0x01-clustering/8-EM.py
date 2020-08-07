@@ -62,10 +62,10 @@ def expectation_maximization(X,
             if i == iterations - 1:
                 print("Log Likelihood after {} iterations: {}".format(
                     i, loglikelihood_new))
-            if abs(loglikelihood_new - loglikelihood) <= tol:
+            if abs(loglikelihood - loglikelihood_new) <= tol:
                 print("Log Likelihood after {} iterations: {}".format(
                     i, loglikelihood_new))
                 break
-        if abs(loglikelihood_new - loglikelihood) <= tol:
+        if abs(loglikelihood - loglikelihood_new) <= tol:
             break
     return pi, m, S, g, loglikelihood
