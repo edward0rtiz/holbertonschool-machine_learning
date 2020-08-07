@@ -59,13 +59,16 @@ def expectation_maximization(X,
             if i % 10 == 0:
                 print("Log Likelihood after {} iterations: {}".format(
                     i, loglikelihood_new.round(5)))
-            if i == iterations - 1:
-                print("Log Likelihood after {} iterations: {}".format(
-                    i, loglikelihood_new.round(5)))
+            #if i == iterations - 1:
+            #    print("Log Likelihood after {} iterations: {}".format(
+            #        i, loglikelihood_new.round(5)))
             if abs(loglikelihood - loglikelihood_new) <= tol:
                 print("Log Likelihood after {} iterations: {}".format(
                     i, loglikelihood_new.round(5)))
                 break
-        if abs(loglikelihood - loglikelihood_new) <= tol:
-            break
+        if verbose is True:
+            print("Log Likelihood after {} iterations: {}".format(
+                i + 1, loglikelihood_new.round(5)))
+        #if abs(loglikelihood - loglikelihood_new) <= tol:
+         #   break
     return pi, m, S, g, loglikelihood_new
