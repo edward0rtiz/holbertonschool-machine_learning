@@ -37,6 +37,7 @@ def expectation_maximization(X,
            each data point in each cluster
         l: log likelihood of the model
     """
+    global loglikelihood_new
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None, None
     if type(k) != int or k <= 0 or X.shape[0] < k:
