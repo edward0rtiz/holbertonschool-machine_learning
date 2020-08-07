@@ -56,7 +56,7 @@ def maximization(X, g):
 
         # Sigma components
         x_m = X - centroid_updated[i]
-        sigma_up = np.dot(gaussian_components[i] * x_m.T, x_m)
+        sigma_up = np.matmul(gaussian_components[i] * x_m.T, x_m)
         sigma_down = np.sum(gaussian_components[i])
         covariance_updated[i] = sigma_up / sigma_down
 
