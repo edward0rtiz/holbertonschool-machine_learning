@@ -48,7 +48,6 @@ def expectation_maximization(X,
     if type(verbose) != bool:
         return None, None, None, None, None
 
-
     pi, m, S = initialize(X, k)
     loglikelihood = 0
 
@@ -57,7 +56,7 @@ def expectation_maximization(X,
         pi, m, S = maximization(X, g)
 
         if verbose is True:
-            if (i % 10 == 0) or (i == 0):
+            if i % 10 == 0:
                 print("Log Likelihood after {} iterations: {}".format(
                     i, loglikelihood_new.round(5)))
             if i == iterations - 1:
