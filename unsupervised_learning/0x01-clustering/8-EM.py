@@ -48,6 +48,7 @@ def expectation_maximization(X,
     if type(verbose) != bool:
         return None, None, None, None, None
 
+    """
     pi, m, S = initialize(X, k)
     loglikelihood = 0
 
@@ -69,3 +70,29 @@ def expectation_maximization(X,
         if abs(loglikelihood - loglikelihood_new) <= tol:
             break
     return pi, m, S, g, loglikelihood_new
+    """
+    pi, m, S = initialize(X, k)
+    l_init = 0
+    count = 0
+    g, log_like = expectation(X, pi, m, S)
+    while(count < iterations):
+        if (np.abs(l_init - log_like)) <= tol:
+            break
+
+        if verbose is True and count % 10 == 0:
+            m1 = 'Log Likelihood after {}'.format(count)
+            m2 = ' iterations: {}'.format(log_like.round(5))
+            print(m1 + m2)
+
+        l_init = log_like
+        pi, m, S = maximization(X, g)
+        g, log_like = expectation(X, pi, m, S)
+
+        count += 1
+
+    if verbose is True:
+        m1 = 'Log Likelihood after {}'.format(count)
+        m2 = ' iterations: {}'.format(log_like.round(5))
+        print(m1 + m2)
+
+    return (pi, m, S, g, log_like)
