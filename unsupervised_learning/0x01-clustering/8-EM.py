@@ -70,7 +70,7 @@ def expectation_maximization(X,
 
     if verbose is True:
         print("Log Likelihood after {} iterations: {}".format(
-            i, loglikelihood_new.round(5)))
+            i + 1, loglikelihood_new.round(5)))
     # if abs(loglikelihood - loglikelihood_new) <= tol:
     # break
     return pi, m, S, g, loglikelihood_new
