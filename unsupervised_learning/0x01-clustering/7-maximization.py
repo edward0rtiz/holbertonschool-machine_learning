@@ -31,7 +31,7 @@ def maximization(X, g):
     k = gaussian_components.shape[0]
     n, d = X.shape
 
-    posterior_prob = np.sum(gaussian_components, axis=0, keepdims=True)
+    posterior_prob = np.sum(gaussian_components, axis=0)
     check = np.sum(posterior_prob)
     if check != X.shape[0]:
         return None, None, None
