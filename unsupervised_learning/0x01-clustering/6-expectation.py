@@ -54,6 +54,7 @@ def expectation(X, pi, m, S):
 
     # https://zhiyzuo.github.io/EM/
     # Log likelihood: ∑i ln ∑z^i p((x^i) , (z^i);Θ)
-    log_likelihood = np.sum(np.log(np.sum(gauss_components, axis=0, keepdims=True)))
+    log_likelihood = np.sum(np.log(np.sum(gauss_components, axis=0,
+                                          keepdims=True)))
 
     return g, log_likelihood
