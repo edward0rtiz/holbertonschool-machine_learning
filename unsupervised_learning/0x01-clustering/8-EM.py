@@ -60,8 +60,8 @@ def expectation_maximization(X,
         if abs(loglikelihood - loglikelihood_new) <= tol and i is not 0:
             break
         pi, m, S = maximization(X, g)
-        g, loglikelihood_new = expectation(X, pi, m, S)
         loglikelihood = loglikelihood_new
+    g, loglikelihood_new = expectation(X, pi, m, S)
     if verbose is True:
         print("Log Likelihood after {} iterations: {}".format(
             i, loglikelihood_new.round(5)))
