@@ -25,7 +25,7 @@ def maximization(X, g):
         return None, None, None
     if not isinstance(g, np.ndarray) or len(X.shape) != 2:
         return None, None, None
-"""
+
     gaussian_components = g
 
     k = gaussian_components.shape[0]
@@ -64,4 +64,3 @@ def maximization(X, g):
         # Formula: P(j) = n(j) / n = Σn i=1 P(j|i) / n
         priors[i] = np.sum(gaussian_components[i]) / n
     return priors, centroid_updated, covariance_updated
-"""
