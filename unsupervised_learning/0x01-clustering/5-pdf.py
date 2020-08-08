@@ -42,7 +42,7 @@ def pdf(X, m, S):
     inv_S = np.linalg.inv(S)
 
     # Formula Section one: (1 √(2π)d|Σ|)
-    part_1_dem = np.sqrt((2 * np.pi) ** d * det_S)
+    part_1_dem = np.sqrt(det_S) * ((2 * np.pi) ** (d/2))
 
     # Formula Section two_upper_1: −1/2(x−μ)T
     part_2 = np.matmul(x_m, inv_S)
