@@ -34,6 +34,21 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
              b: numpy.ndarray of shape (kmax - kmin + 1) containing the BIC
                 value for each cluster size tested
     """
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None, None, None, None
+    if type(kmin) != int or kmin <= 0 or kmin >= X.shape[0]:
+        return None, None, None, None
+    if type(kmax) != int or kmax <= 0 or kmax >= X.shape[0]:
+        return None, None, None, None
+    if kmin >= kmax:
+        return None, None, None, None
+    if type(iterations) != int or iterations <= 0:
+        return None, None, None, None
+    if type(tol) != float or tol <= 0:
+        return None, None, None, None
+    if type(verbose) != bool:
+        return None, None, None, None
+
     k_best = []
     best_res = []
     logl_val = []
