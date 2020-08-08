@@ -61,6 +61,7 @@ def expectation_maximization(X,
             break
         pi, m, S = maximization(X, g)
         loglikelihood = loglikelihood_new
+    g, loglikelihood_new = expectation(X, pi, m, S)
     if verbose is True:
         print("Log Likelihood after {} iterations: {}".format(
             i, loglikelihood_new.round(5)))
