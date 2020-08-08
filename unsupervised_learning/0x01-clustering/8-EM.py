@@ -51,12 +51,12 @@ def expectation_maximization(X,
     pi, m, S = initialize(X, k)
     loglikelihood = 0
 
-    for i in range(iterations):
+    for i in range(iterations + 1):
         g, loglikelihood_new = expectation(X, pi, m, S)
         if verbose is True and (i % 10 == 0):
             print("Log Likelihood after {} iterations: {}".format(
-                i, loglikelihood_new.round(5)))
-        if abs(loglikelihood_new - loglikelihood) < tol:
+                i - 1, loglikelihood_new.round(5)))
+        if abs(loglikelihood_new - loglikelihood) <= tol:
             break
         pi, m, S = maximization(X, g)
         loglikelihood = loglikelihood_new
