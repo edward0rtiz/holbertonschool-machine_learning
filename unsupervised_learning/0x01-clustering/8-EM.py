@@ -58,6 +58,8 @@ def expectation_maximization(X,
             print("Log Likelihood after {} iterations: {}".format(
                 i, loglikelihood_new.round(5)))
         if np.abs(loglikelihood - loglikelihood_new) <= tol:
+            print("Log Likelihood after {} iterations: {}".format(
+                i, loglikelihood_new.round(5)))
             break
         pi, m, S = maximization(X, g)
         loglikelihood = loglikelihood_new
