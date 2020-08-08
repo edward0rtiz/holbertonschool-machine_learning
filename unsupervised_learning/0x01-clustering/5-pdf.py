@@ -31,7 +31,7 @@ def pdf(X, m, S):
 
     # formula
     # p(x∣ μ,Σ) = (1 √(2π)d|Σ|)exp(−1/2(x−μ)T Σ−1(x−μ))
-    _, d = X.shape
+    n, d = X.shape
     mean = m
     x_m = X - mean
     x_mT = x_m.T
@@ -43,18 +43,18 @@ def pdf(X, m, S):
     inv_S = np.linalg.inv(S)
 
     # Formula Section one: (1 √(2π)d|Σ|)
-    part_1 = 1 / np.sqrt((2 * np.pi) ** d * det_S)
+    part_1 = np.sqrt(det_S) * ((2 * np.pi) ** (d/2))
 
     # Formula Section two_upper_1: −1/2(x−μ)T
-    part_2 = np.matmul((-x_m / 2), inv_S)
+    part_2 = np.matmul(x_m, inv_S)
 
     # Formula Section two_upper_2: Σ−1(x−μ) used diagonal to fix alloc err
-    part_2_1 = np.sum(part_2 * x_m, axis=0)
+    part_2_1 = np.sum(part_2 * x_m, axis=1)
 
     # Formula Section two exp(−1/2(x−μ)T Σ−1(x−μ))
-    part_2_2 = np.exp(part_2_1)
+    part_2_2 = np.exp(part_2_1 / 2)
 
     # pdf = part_1 * part_2_2:
-    pdf = part_1 * part_2_2
+    pdf = part_2_2 / part_1
     P = np.where(pdf < 1e-300, 1e-300, pdf)
     return P
