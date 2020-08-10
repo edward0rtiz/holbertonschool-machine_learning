@@ -12,7 +12,7 @@ def markov_chain(P, s, t=1):
     Args:
         P: 2D numpy.ndarray of shape (n, n) representing the transition matrix
            P[i, j]: is the probability of transitioning from state i to state j
-           n is the number of states in the markov chain
+           n: the number of states in the markov chain
         s: numpy.ndarray of shape (1, n) represents the probability of starting
            in each state
         t: number of iterations that the markov chain has been through
