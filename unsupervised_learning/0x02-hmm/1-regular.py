@@ -31,6 +31,7 @@ def regular(P):
         # trick: has to be normalized
         state = (evecs / evecs.sum())
 
+        # P.T π.T = π.T (.)
         new_state = np.dot(state.T, P)
         for i in new_state:
             if (i >= 0).all() and np.isclose(i.sum(), 1):
