@@ -30,8 +30,9 @@ def markov_chain(P, s, t=1):
         if n1 != s.shape[1] or s.shape[0] != 1:
             return None
         for i in range(t):
-            s = np.matmul(s, P)
+            # formula: p(t)ij = ∑^rk=1 p(ik)p(kj) .
+            # dot pro product between the sate and the P given n iterations
+            s = np.dot(s, P)
         return s
     except Exception:
         return None
-
