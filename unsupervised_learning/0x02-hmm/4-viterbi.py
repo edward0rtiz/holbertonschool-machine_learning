@@ -65,8 +65,9 @@ def viterbi(Observation, Emission, Transition, Initial):
         # Flip the path array using reverse to maintain main structure
         path.reverse()
 
-        P = np.amax(F, axis=0)
-        P = np.amin(P)
+        # the last of the large probability
+        P = np.amax(F[:, T - 1], axis=0)
+
         return path, P
     except Exception:
         None, None
