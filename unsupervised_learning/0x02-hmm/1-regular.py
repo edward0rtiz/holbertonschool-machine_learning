@@ -23,7 +23,7 @@ def regular(P):
             return None
 
         # Method by eigendescomposition
-        # Formula shorturl.at/mqwAU
+        # Formula https://cutt.ly/Ed9Ad7s
 
         #  (πP).T = π.T ⟹ P.T π.T = π.T (.)
         evals, evecs = np.linalg.eig(P.T)

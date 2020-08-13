@@ -26,7 +26,9 @@ def absorbing(P):
 
     # formula t=(I-Q)^-1 1
     # approach using Neumman series: t = (∑ inf k=0 * Q^k) * 1
-    # suggested implementation based on: shorturl.at/pst59
+    # suggested implementation based on: https://stackoverflow.com/
+    # questions/45164505/best-iterative-way-to-calculate-the-fundamental-matrix-
+    # of-an-absorbing-markov-ch
     for i in range(n1):
         # print('this is Pi {}'.format(P[i]))
         for j in range(n2):
