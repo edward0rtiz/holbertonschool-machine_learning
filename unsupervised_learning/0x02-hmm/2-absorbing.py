@@ -24,6 +24,9 @@ def absorbing(P):
     if not (D == 1).any():
         return False
 
+    # formula t=(I-Q)^-1 1
+    # approach using Neumman series: t = (∑ inf k=0 * Q^k) * 1
+    # suggested implementation based on: shorturl.at/pst59
     for i in range(n1):
         # print('this is Pi {}'.format(P[i]))
         for j in range(n2):
