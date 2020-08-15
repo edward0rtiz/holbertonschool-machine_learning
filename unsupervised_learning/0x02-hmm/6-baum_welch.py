@@ -99,7 +99,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
                 for s in range(M):
                     Transition[:, s] = np.sum(gamma[:, Observations == s],
                                               axis=1)
-                Transition = np.divide(Transition, denominator.reshape((-1, 1)))
+                Transition = np.divide(Transition,
+                                       denominator.reshape((-1, 1)))
         return Transition, Emission
     except Exception:
         return None, None
