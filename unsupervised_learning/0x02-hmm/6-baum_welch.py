@@ -27,8 +27,8 @@ def forward(Observation, Emission, Transition, Initial):
                              * Emissions)
 
     # Termination P(O|λ) == ∑Ni=1 αT (i)
-    # P = np.sum(F[:, -1])
-    return F
+    P = np.sum(F[:, -1])
+    return P, F
 
 
 def backward(Observation, Emission, Transition, Initial):
@@ -45,8 +45,8 @@ def backward(Observation, Emission, Transition, Initial):
             Emissions = Emission[:, Observation[t + 1]]
             beta[n, t] = np.sum((Transitions * beta[:, t + 1]) * Emissions)
 
-    # P = np.sum(Initial[:, 0] * Emission[:, Observation[0]] * beta[:, 0])
-    return beta
+    P = np.sum(Initial[:, 0] * Emission[:, Observation[0]] * beta[:, 0])
+    return P, beta
 
 
 def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
@@ -73,8 +73,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
         T = Observations.shape[0]
 
         for n in range(iterations):
-            alpha = forward(Observations, Emission, Transition, Initial)
-            beta = backward(Observations, Emission, Transition, Initial)
+            _, alpha = forward(Observations, Emission, Transition, Initial)
+            _, beta = backward(Observations, Emission, Transition, Initial)
 
             xi = np.zeros((N, N, T - 1))
             for t in range(T - 1):
@@ -100,7 +100,7 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
             for s in range(M):
                 Emission[:, s] = np.sum(gamma[:, Observations == s],
                                         axis=1)
-            Emission = np.divide(Transition, denominator.reshape((-1, 1)))
+            Emission = np.divide(Emission, denominator.reshape((-1, 1)))
         return Transition, Emission
     except Exception:
         return None, None
