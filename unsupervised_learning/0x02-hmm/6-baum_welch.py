@@ -80,11 +80,11 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
             for t in range(T - 1):
                 denominator = np.dot(np.dot(alpha[:, t].T, Transition) *
                                      Emission[:, Observations[t + 1]].T,
-                                     beta[t + 1, :])
+                                     beta[:, t + 1])
                 for i in range(N):
                     numerator = alpha[i, t] * Transition[i, :] * \
                                 Emission[:, Observations[t + 1]].T * \
-                                beta[t + 1, :].T
+                                beta[:, t + 1].T
                     xi[i, :, t] = numerator / denominator
 
                 gamma = np.sum(xi, axis=1)
