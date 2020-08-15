@@ -37,7 +37,7 @@ def backward(Observation, Emission, Transition, Initial):
     T = Observation.shape[0]
     N, M = Emission.shape
     beta = np.zeros((N, T))
-    beta[:, T - 1] = np.ones((N))
+    beta[:, T - 1] = np.ones(N)
 
     for t in range(T - 2, -1, -1):
         for n in range(N):
@@ -93,8 +93,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
 
             # adding additional T element in gamma
 
-            gamma = np.hstack(gamma, np.sum(xi[:, :, T - 2],
-                                            axis=0).reshape((-1, 1)))
+            gamma = np.hstack((gamma, np.sum(xi[:, :, T - 2],
+                                             axis=0).reshape((-1, 1))))
 
             denominator = np.sum(gamma, axis=1)
             for s in range(M):
