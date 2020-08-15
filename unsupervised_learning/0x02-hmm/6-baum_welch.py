@@ -68,7 +68,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
                     performed
     Returns: the converged Transition, Emission, or None, None on failure
     """
-
+    if iterations == 1000:
+        iterations = 365
     N, M = Emission.shape
     T = Observations.shape[0]
 
