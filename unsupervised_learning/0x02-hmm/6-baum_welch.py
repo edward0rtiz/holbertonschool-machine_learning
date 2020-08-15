@@ -78,18 +78,18 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
 
             xi = np.zeros((N, N, T - 1))
             for t in range(T - 1):
-                denominator = np.dot(np.dot(alpha[:, t].T, Emission) *
-                                     Transition[:, Observations[t + 1]].T,
+                denominator = np.dot(np.dot(alpha[:, t].T, Transition) *
+                                     Emission[:, Observations[t + 1]].T,
                                      beta[t + 1, :])
                 for i in range(N):
-                    numerator = alpha[i, t] * Emission[i, :] * \
-                                Transition[:, Observations[t + 1]].T * \
+                    numerator = alpha[i, t] * Transition[i, :] * \
+                                Emission[:, Observations[t + 1]].T * \
                                 beta[t + 1, :].T
                     xi[i, :, t] = numerator / denominator
 
                 gamma = np.sum(xi, axis=1)
-                Emission = np.sum(xi, 2) / np.sum(gamma,
-                                                  axis=1).reshape((-1, 1))
+                Transition = np.sum(xi, 2) / np.sum(gamma,
+                                                    axis=1).reshape((-1, 1))
 
                 # adding additional T element in gamma
 
@@ -97,10 +97,10 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
                                                 axis=0).reshape((-1, 1)))
 
                 for s in range(M):
-                    Transition[:, s] = np.sum(gamma[:, Observations == s],
-                                              axis=1)
-                Transition = np.divide(Transition,
-                                       denominator.reshape((-1, 1)))
+                    Emission[:, s] = np.sum(gamma[:, Observations == s],
+                                            axis=1)
+                Emission = np.divide(Transition,
+                                     denominator.reshape((-1, 1)))
         return Transition, Emission
     except Exception:
         return None, None
