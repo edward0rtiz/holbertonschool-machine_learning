@@ -120,6 +120,8 @@ class BayesianOptimization():
         else:
             index = np.argmax(self.gp.Y)
 
+        self.gp.X = self.gp.X[:-1]
+
         x_opt = self.gp.X[index]
         y_opt = self.gp.Y[index]
 
