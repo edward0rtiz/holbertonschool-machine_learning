@@ -19,7 +19,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
             decoder: the decoder model
             auto: the full autoencoder model
     """
-    X_input_encoded = K.layers.Input(shape=(input_dims,))
+    X_input_encoded = K.Input(shape=(input_dims,))
     hidden_ly = K.layers.Dense(units=hidden_layers[0], activation='relu')
 
     # reversed for the decoder
@@ -30,7 +30,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     latent_ly = K.layers.Dense(units=latent_dims, activation='relu')
     Y_encoded = latent_ly(Y_prev)
-    encoder = K.Model(inputs=X_input_encoded, output=Y_encoded)
+    encoder = K.Model(X_input_encoded, Y_encoded)
 
     X_input_decoded = K.Input(shape=(latent_dims,))
     hidden_ly_decoded = K.layers.Dense(units=hidden_layers[-1],
@@ -42,12 +42,12 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         Y_prev = hidden_ly_decoded(Y_prev)
     last_layer = K.layers.Dense(units=input_dims, activation='sigmoid')
     output = last_layer(Y_prev)
-    decoder = K.Model(inputs=X_input_decoded, outputs=output)
+    decoder = K.Model(X_input_decoded, output)
 
     X_input = K.Input(shape=(input_dims,))
     encoder = encoder(X_input)
     decoder = decoder(encoder)
-    auto = K.Model(inputs=X_input, outputs=decoder)
+    auto = K.Model(X_input, decoder)
     auto.compile(loss='binary_crossentropy', optimizer='adam')
 
     return encoder, decoder, auto
