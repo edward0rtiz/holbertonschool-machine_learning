@@ -45,9 +45,9 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     decoder = K.Model(X_input_decoded, output)
 
     X_input = K.Input(shape=(input_dims,))
-    encoder = encoder(X_input)
-    decoder = decoder(encoder)
-    auto = K.Model(X_input, decoder)
+    encoder_o = encoder(X_input)
+    decoder_o = decoder(encoder_o)
+    auto = K.Model(X_input, decoder_o)
     auto.compile(loss='binary_crossentropy', optimizer='adam')
 
     return encoder, decoder, auto
