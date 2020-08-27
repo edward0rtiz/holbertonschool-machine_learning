@@ -24,7 +24,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     # reversed for the decoder
     Y_prev = hidden_ly(X_input_encoded)
-    for i in range(1, len(hidden_ly)):
+    for i in range(1, len(hidden_layers)):
         hidden_ly = K.layers.Dense(units=hidden_layers[i], activation='relu')
         Y_prev = hidden_ly(Y_prev)
 
