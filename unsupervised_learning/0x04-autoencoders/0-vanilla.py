@@ -29,8 +29,8 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         Y_prev = hidden_ly(Y_prev)
 
     latent_ly = K.layers.Dense(units=latent_dims, activation='relu')
-    Y_encoded = latent_ly(Y_prev)
-    encoder = K.Model(X_input_encoded, Y_encoded)
+    bottleneck = latent_ly(Y_prev)
+    encoder = K.Model(X_input_encoded, bottleneck)
 
     X_input_decoded = K.Input(shape=(latent_dims,))
     hidden_ly_decoded = K.layers.Dense(units=hidden_layers[-1],
