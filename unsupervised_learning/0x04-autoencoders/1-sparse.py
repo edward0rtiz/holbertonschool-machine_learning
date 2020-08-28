@@ -35,8 +35,8 @@ def sparse(input_dims, hidden_layers, latent_dims, lambtha):
         Y_prev = hidden_ly(Y_prev)
     latent_ly = K.layers.Dense(units=latent_dims, activation='relu',
                                activity_regularizer=L1)
-    Y_encoded = latent_ly(Y_prev)
-    encoder = K.Model(X_inputs, Y_encoded)
+    bottleneck = latent_ly(Y_prev)
+    encoder = K.Model(X_inputs, bottleneck)
 
     X_decode = K.Input(shape=(latent_dims,))
     hidden_ly = K.layers.Dense(units=hidden_layers[-1], activation='relu')
