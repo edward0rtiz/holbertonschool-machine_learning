@@ -30,11 +30,11 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     def sampling(args):
         """Sampling similar points in latent space"""
-        z_mean, z_stand_des = args
-        batch = K.backend.shape(z_mean)[0]
-        dim = K.backend.int_shape(z_mean)[1]
+        z_m, z_stand_des = args
+        batch = K.backend.shape(z_m)[0]
+        dim = K.backend.int_shape(z_m)[1]
         epsilon = K.backend.random_normal(shape=(batch, dim))
-        return z_mean + K.backend.exp(z_stand_des) * epsilon
+        return z_m + K.backend.exp(z_stand_des / 2) * epsilon
 
     z = K.layers.Lambda(sampling, output_shape=(latent_dims,))([z_mean,
                                                                 z_log_sigma])
@@ -57,6 +57,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     def vae_loss(x, x_decoder_mean):
         x_loss = K.backend.binary_crossentropy(x, x_decoder_mean)
+        x_loss = K.backend.sum(x_loss, axis=1)
         kl_loss = - 0.5 * K.backend.mean(1 + z_log_sigma -
                                          K.backend.square(z_mean) -
                                          K.backend.exp(z_log_sigma), axis=-1)
