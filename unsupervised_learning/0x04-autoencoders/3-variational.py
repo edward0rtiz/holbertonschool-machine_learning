@@ -31,8 +31,9 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     def sampling(args):
         """Sampling similar points in latent space"""
         z_mean, z_stand_des = args
-        epsilon = K.backend.random_normal(shape=(latent_dims,),
-                                          mean=0.0, stddev=1.0)
+        batch = K.backend.shape(z_mean)[0]
+        dim = K.backend.int_shape(z_mean)[1]
+        epsilon = K.backend.random_normal(shape=(batch, dim))
         return z_mean + K.backend.exp(z_stand_des) * epsilon
 
     z = K.layers.Lambda(sampling, output_shape=(latent_dims,))([z_mean,
