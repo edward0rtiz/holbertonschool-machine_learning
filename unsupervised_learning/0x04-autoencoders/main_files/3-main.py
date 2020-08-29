@@ -16,7 +16,7 @@ np.random.seed(0)
 tf.set_random_seed(0)
 encoder, decoder, auto = autoencoder(784, [512], 2)
 auto.fit(x_train, x_train, epochs=50, batch_size=256, shuffle=True,
-         validation_data=(x_test, x_test))
+                validation_data=(x_test, x_test))
 encoded, mu, log_sig = encoder.predict(x_test[:10])
 print(mu)
 print(np.exp(log_sig / 2))
