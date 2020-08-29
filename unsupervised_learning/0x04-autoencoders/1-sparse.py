@@ -1,7 +1,7 @@
-#!usr/bin/env python3
+#!/usr/bin/env python3
 """autoencoder sparce"""
 
-import tensorflow.keras as K
+import tensorflow.keras as keras
 
 
 def sparse(input_dims, hidden_layers, latent_dims, lambtha):
@@ -22,38 +22,40 @@ def sparse(input_dims, hidden_layers, latent_dims, lambtha):
             auto: the full autoencoder model
 
     """
-    L1 = K.regularizers.l1(lambtha)
+    L1 = keras.regularizers.l1(lambtha)
 
-    X_inputs = K.Input(shape=(input_dims,))
+    X_inputs = keras.Input(shape=(input_dims,))
 
-    hidden_ly = K.layers.Dense(units=hidden_layers[0], activation='relu',
-                               activity_regularizer=L1)
+    hidden_ly = keras.layers.Dense(units=hidden_layers[0], activation='relu',
+                                   activity_regularizer=L1)
     Y_prev = hidden_ly(X_inputs)
     for i in range(1, len(hidden_layers)):
-        hidden_ly = K.layers.Dense(units=hidden_layers[i], activation='relu',
-                                   activity_regularizer=L1)
+        hidden_ly = keras.layers.Dense(units=hidden_layers[i],
+                                       activation='relu',
+                                       activity_regularizer=L1)
         Y_prev = hidden_ly(Y_prev)
-    latent_ly = K.layers.Dense(units=latent_dims, activation='relu',
-                               activity_regularizer=L1)
+    latent_ly = keras.layers.Dense(units=latent_dims, activation='relu',
+                                   activity_regularizer=L1)
     bottleneck = latent_ly(Y_prev)
-    encoder = K.Model(X_inputs, bottleneck)
+    encoder = keras.Model(X_inputs, bottleneck)
 
-    X_decode = K.Input(shape=(latent_dims,))
-    hidden_ly = K.layers.Dense(units=hidden_layers[-1], activation='relu')
+    X_decode = keras.Input(shape=(latent_dims,))
+    hidden_ly = keras.layers.Dense(units=hidden_layers[-1], activation='relu')
     Y_prev = hidden_ly(X_decode)
     for j in range(len(hidden_layers) - 2, -1, -1):
-        hidden_d = K.layers.Dense(units=hidden_layers[j],
-                                  activation='relu')
+        hidden_d = keras.layers.Dense(units=hidden_layers[j],
+                                      activation='relu')
         Y_prev = hidden_d(Y_prev)
 
-    last_layer = K.layers.Dense(units=input_dims, activation='sigmoid')
+    last_layer = keras.layers.Dense(units=input_dims,
+                                    activation='sigmoid')
     output = last_layer(Y_prev)
-    decoder = K.Model(X_decode, output)
+    decoder = keras.Model(X_decode, output)
 
-    X_input = K.Input(shape=(input_dims,))
+    X_input = keras.Input(shape=(input_dims,))
     e_output = encoder(X_input)
     d_output = decoder(e_output)
-    autoencoder = K.Model(X_input, d_output)
+    autoencoder = keras.Model(X_input, d_output)
     autoencoder.compile(loss='binary_crossentropy', optimizer='adam')
 
     return encoder, decoder, autoencoder
