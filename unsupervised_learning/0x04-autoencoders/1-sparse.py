@@ -31,8 +31,7 @@ def sparse(input_dims, hidden_layers, latent_dims, lambtha):
     Y_prev = hidden_ly(X_inputs)
     for i in range(1, len(hidden_layers)):
         hidden_ly = keras.layers.Dense(units=hidden_layers[i],
-                                       activation='relu',
-                                       activity_regularizer=L1)
+                                       activation='relu')
         Y_prev = hidden_ly(Y_prev)
     latent_ly = keras.layers.Dense(units=latent_dims, activation='relu',
                                    activity_regularizer=L1)
