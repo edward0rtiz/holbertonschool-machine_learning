@@ -19,7 +19,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     X_input = keras.Input(shape=(input_dims,))
     hidden_ly = keras.layers.Dense(units=hidden_layers[0], activation='relu')
     Y_prev = hidden_ly(X_input)
-    for i in range(1, len(hidden_layers)):
+    for i in range(hidden_layers):
         hidden_ly = keras.layers.Dense(units=hidden_layers[i],
                                        activation='relu')
         Y_prev = hidden_ly(Y_prev)
@@ -44,7 +44,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     hidden_ly_deco = keras.layers.Dense(units=hidden_layers[-1],
                                         activation='relu')
     Y_prev = hidden_ly_deco(X_decode)
-    for j in range(len(hidden_layers) - 2, -1, -1):
+    for j in range(len(hidden_layers), 0, -1):
         hidden_ly_deco = keras.layers.Dense(units=hidden_layers[j],
                                             activation='relu')
         Y_prev = hidden_ly_deco(Y_prev)
@@ -52,7 +52,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     output = last_ly(Y_prev)
     decoder = keras.Model(X_decode, output)
 
-    e_output = encoder(X_input)[-1]
+    e_output = encoder(X_input)[2]
     d_output = decoder(e_output)
     auto = keras.Model(X_input, d_output)
 
