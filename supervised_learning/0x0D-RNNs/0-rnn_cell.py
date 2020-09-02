@@ -48,7 +48,7 @@ class RNNCell:
         y_pred = (h_next @ self.Wy) + self.by  # z (sum of weight and X's)
         z = y_pred  # prediction at timestep
 
-        # (σ): g(z) = 1 / (1 + e^{-z})
+        # (σ): g(z) = e^z / (1 + e^{-z})
         y = np.exp(z) / np.sum(np.exp(z), axis=1, keepdims=True)
 
         return h_next, y
