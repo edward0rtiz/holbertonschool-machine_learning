@@ -85,8 +85,6 @@ class BidirectionalCell:
 
         # Bias of presynaptic node
         o = self.by.shape[1]
-        print("#$$##$#$")
-        print(o)
 
         Y = np.zeros((t, m, o))
 
