@@ -10,8 +10,6 @@ import matplotlib.pyplot as plt
 preprocessor = __import__('preprocess_data').preprocessor
 
 
-
-
 class WindowGenerator:
     """ Class window genenrator """
 
@@ -218,9 +216,9 @@ class WindowGenerator:
                 patience:
             Returns:
             """
-            early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss',
-                                                              patience=patience,
-                                                              mode='min')
+            early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss',
+                                                          patience=patience,
+                                                          mode='min')
 
             model.compile(loss=tf.losses.MeanSquaredError(),
                           optimizer=tf.optimizers.Adam(),
@@ -228,7 +226,7 @@ class WindowGenerator:
 
             history = model.fit(window.train, epochs=MAX_EPOCHS,
                                 validation_data=window.val,
-                                callbacks=[early_stopping])
+                                callbacks=[early_stop])
             return history
 
         def build_model():
@@ -249,6 +247,7 @@ class WindowGenerator:
 
 if __name__ == '__main__':
 
+    pd.__version__
     train_df, val_df, test_df = preprocessor
     wide_window = WindowGenerator(
         input_width=24, label_width=1, shift=1,
