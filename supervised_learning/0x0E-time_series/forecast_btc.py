@@ -7,6 +7,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
+preprocessor = __import__('preprocess_data').preprocessor
+
+
+
+
 class WindowGenerator:
     """ Class window genenrator """
 
@@ -205,38 +210,70 @@ class WindowGenerator:
             result = inputs[:, :, self.label_index]
             return result[:, :, tf.newaxis]
 
-    def compile_and_fit(model, window, patience=2):
-        """
-        compile and fit
-        Args:
-            window:
-            patience:
-        Returns:
-        """
-        early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss',
-                                                          patience=patience,
-                                                          mode='min')
+        def compile_and_fit(model, window, patience=2):
+            """
+            compile and fit
+            Args:
+                window:
+                patience:
+            Returns:
+            """
+            early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss',
+                                                              patience=patience,
+                                                              mode='min')
 
-        model.compile(loss=tf.losses.MeanSquaredError(),
-                      optimizer=tf.optimizers.Adam(),
-                      metrics=[tf.metrics.MeanAbsoluteError()])
+            model.compile(loss=tf.losses.MeanSquaredError(),
+                          optimizer=tf.optimizers.Adam(),
+                          metrics=[tf.metrics.MeanAbsoluteError()])
 
-        history = model.fit(window.train, epochs=MAX_EPOCHS,
-                            validation_data=window.val,
-                            callbacks=[early_stopping])
-        return history
+            history = model.fit(window.train, epochs=MAX_EPOCHS,
+                                validation_data=window.val,
+                                callbacks=[early_stopping])
+            return history
 
-    def build_model():
-        """
-        build_model
-        Returns:
-        """
-        lstm_model = tf.keras.models.Sequential([
-            # Shape [batch, time, features] => [batch, time, lstm_units]
-            tf.keras.layers.LSTM(16, return_sequences=True),
-            # Shape => [batch, time, features]
-            tf.keras.layers.Dense(units=1)
-        ])
-        lstm_model.summary()
+        def build_model():
+            """
+            build_model
+            Returns:
+            """
+            lstm_model = tf.keras.models.Sequential([
+                # Shape [batch, time, features] => [batch, time, lstm_units]
+                tf.keras.layers.LSTM(16, return_sequences=True),
+                # Shape => [batch, time, features]
+                tf.keras.layers.Dense(units=1)
+            ])
+            lstm_model.summary()
 
-        return lstm_model
+            return lstm_model
+
+
+if __name__ == '__main__':
+
+    train_df, val_df, test_df = preprocessor
+    wide_window = WindowGenerator(
+        input_width=24, label_width=1, shift=1,
+        label_columns=['Close'])
+    column_indices = wide_window.column_indices
+    print(wide_window)
+
+    val_performance = {}
+    performance = {}
+    baseline = Baseline(label_index=column_indices['Close'])
+    baseline.compile(loss=tf.losses.MeanSquaredError(),
+                     metrics=[tf.metrics.MeanAbsoluteError()])
+
+    val_performance['Baseline'] = baseline.evaluate(wide_window.val)
+    performance['Baseline'] = baseline.evaluate(wide_window.test, verbose=0)
+    print('Input shape:', wide_window.example[0].shape)
+    print('Output shape:', baseline(wide_window.example[0]).shape)
+
+    wide_window.plot(baseline)
+    lstm_model = baseline.build_model
+    MAX_EPOCHS = 50
+    history = baseline.compile_and_fit(lstm_model, wide_window)
+
+    # Evaluate LSTM with wide_window
+    val_performance['LSTM'] = lstm_model.evaluate(wide_window.val)
+    performance['LSTM'] = lstm_model.evaluate(wide_window.test, verbose=0)
+
+    wide_window.plot(lstm_model)
