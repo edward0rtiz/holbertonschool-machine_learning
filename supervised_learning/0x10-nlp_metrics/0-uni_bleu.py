@@ -26,7 +26,6 @@ def uni_bleu(references, sentence):
                     new = reference.count(word)
                     old = count_dict[word]
                     count_dict[word] = max(new, old)
-    #print(count_dict)
 
     # Clipping
     len_sen = len(sentence)
