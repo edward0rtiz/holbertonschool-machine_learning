@@ -37,7 +37,7 @@ def uni_bleu(references, sentence):
     if len_sen > reference_len:
         bp = 1
     else:
-        bp = np.exp(1 - (reference_len / len_sen))
+        bp = np.exp(1 - (float(reference_len) / len_sen))
 
     bleu_score = bp * np.exp(np.log(sum(count_dict.values()) / len_sen))
 
