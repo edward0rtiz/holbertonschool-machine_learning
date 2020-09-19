@@ -16,6 +16,7 @@ def uni_bleu(references, sentence):
     sen = list(set(sentence))
     count_dict = {}
 
+    # Count appearances
     for reference in references:
         for word in reference:
             if word in sen:
@@ -25,15 +26,21 @@ def uni_bleu(references, sentence):
                     new = reference.count(word)
                     old = count_dict[word]
                     count_dict[word] = max(new, old)
+    #print(count_dict)
 
+    # Clipping
     len_sen = len(sentence)
     list_references = []
     for reference in references:
         len_ren = len(reference)
         list_references.append(((abs(len_ren - len_sen)), len_ren))
 
+
+    # Precision
     reference_len = sorted(list_references, key=lambda x: x[0])
     reference_len = reference_len[0][1]
+
+    # Penalty
     if len_sen > reference_len:
         bp = 1
     else:
