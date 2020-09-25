@@ -21,7 +21,7 @@ def sdp_attention(Q, K, V, mask=None):
     """
     q = tf.matmul(Q, K, transpose_b=True)
     k = tf.cast((tf.math.square(K.shape[-1])), tf.float32)
-    qk_scale = tf.math.divide(q, k)
+    qk_scale = tf.math.divide(q, tf.math.sqrt(k))
     if mask is not None:
         mask_mul = tf.math.multiply(mask, -1e9)
         qk_scale += mask_mul
