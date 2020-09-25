@@ -1,4 +1,4 @@
-# !/usr/bin/env python3
+#!/usr/bin/env python3
 """ Machine Translation model with RNN's """
 
 import tensorflow as tf
