@@ -8,11 +8,15 @@ def sdp_attention(Q, K, V, mask=None):
     """
 
     Args:
-        Q:
-        K:
-        V:
-        mask:
-
+        Q: tensor with its last two dimensions as (..., seq_len_q, dk)
+           containing the query matrix
+        K: tensor with its last two dimensions as (..., seq_len_v, dk)
+           containing the key matrix
+        V: tensor with its last two dimensions as (..., seq_len_v, dv)
+           containing the value matrix
+        mask: tensor that can be broadcast into (..., seq_len_q, seq_len_v)
+              containing the optional mask, or defaulted to None
+        output, weights
     Returns:
     """
     q = tf.matmul(Q, K, transpose_b=True)
