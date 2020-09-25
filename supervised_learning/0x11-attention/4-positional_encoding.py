@@ -6,13 +6,14 @@ import numpy as np
 
 def positional_encoding(max_seq_len, dm):
     """
-    ppositional encoding
+    positional encoding
     Args:
         max_seq_len: Integer representing the maximum sequence
         dm: model depth
     Returns: numpy.ndarray of shape (max_seq_len, dm) containing
              the positional encoding vectors
     """
+
     p_encoding = np.zeros([max_seq_len, dm])
 
     for i in range(dm):
