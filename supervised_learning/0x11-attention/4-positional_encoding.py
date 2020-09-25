@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
+""" postitional encoding"""
 
 import numpy as np
 
 
 def positional_encoding(max_seq_len, dm):
     """
-
+    ppositional encoding
     Args:
         max_seq_len: Integer representing the maximum sequence
         dm: model depth
