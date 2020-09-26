@@ -51,10 +51,8 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         scaled_attention = tf.transpose(scaled_attention,
                                         perm=[0, 2, 1, 3])
 
-        concat_attention = tf.reshape(scaled_attention,
-                                      (batch_size,
-                                       -1,
-                                       self.dm))
+        concat_attention = tf.reshape(scaled_attention, (batch_size, -1,
+                                                         self.dm))
 
         output = self.linear(concat_attention)
         return output, attention_weights
