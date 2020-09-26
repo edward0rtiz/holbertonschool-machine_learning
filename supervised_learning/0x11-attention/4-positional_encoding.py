@@ -2,6 +2,13 @@
 """ postitional encoding"""
 
 import numpy as np
+import tensorflow as tf
+
+
+def get_angles(pos, i, d_model):
+    """Get angles"""
+    angle_rates = 1 / np.power(10000, (2 * (i//2)) / np.float32(d_model))
+    return pos * angle_rates
 
 
 def positional_encoding(max_seq_len, dm):
@@ -14,12 +21,16 @@ def positional_encoding(max_seq_len, dm):
              the positional encoding vectors
     """
 
-    p_encoding = np.zeros([max_seq_len, dm])
+    angle_rads = get_angles(np.arange(max_seq_len)[:, np.newaxis],
+                            np.arange(dm)[np.newaxis, :],
+                            dm)
 
-    for i in range(dm):
-        for p in range(max_seq_len):
-            p_encoding[p, i] = p / np.power(1000, (2 * (i // 2) / dm))
+    # apply sin to even indices in the array; 2i
+    angle_rads[:, 0::2] = np.sin(angle_rads[:, 0::2])
 
-        p_encoding[:, 0::2] = np.sin(p_encoding[:, 0::2])
-        p_encoding[:, 1::2] = np.cos(p_encoding[:, 1::2])
-    return p_encoding
+    # apply cos to odd indices in the array; 2i+1
+    angle_rads[:, 1::2] = np.cos(angle_rads[:, 1::2])
+
+    pos_encoding = angle_rads[np.newaxis, ...]
+
+    return tf.cast(pos_encoding, dtype=tf.float32)
