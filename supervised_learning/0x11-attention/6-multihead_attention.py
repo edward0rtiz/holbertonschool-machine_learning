@@ -54,9 +54,9 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         K_linear = self.Wk(K)
         Q_linear = self.Wq(Q)
 
-        V = tf.reshape(V_linear, [batch, -1, self.h, self.depth])
-        K = tf.reshape(K_linear, [batch, -1, self.h, self.depth])
-        Q = tf.reshape(Q_linear, [batch, -1, self.h, self.depth])
+        V = tf.reshape(V_linear, (batch, -1, self.h, self.depth))
+        K = tf.reshape(K_linear, (batch, -1, self.h, self.depth))
+        Q = tf.reshape(Q_linear, (batch, -1, self.h, self.depth))
 
         V = tf.transpose(V, perm=[0, 2, 1, 3])
         K = tf.transpose(K, perm=[0, 2, 1, 3])
