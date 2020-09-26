@@ -26,11 +26,11 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         super(MultiHeadAttention, self).__init__()
         self.h = h
         self.dm = dm
-        self.depth = int(self.dm / self.h)
-        self.Wq = tf.keras.layers.Dense(self.dm)
-        self.Wk = tf.keras.layers.Dense(self.dm)
-        self.Wv = tf.keras.layers.Dense(self.dm)
-        self.linear = tf.keras.layers.Dense(self.dm)
+        self.depth = int(dm / h)
+        self.Wq = tf.keras.layers.Dense(units=dm)
+        self.Wk = tf.keras.layers.Dense(units=dm)
+        self.Wv = tf.keras.layers.Dense(units=dm)
+        self.linear = tf.keras.layers.Dense(units=dm)
 
     def call(self, Q, K, V, mask):
         """ Call transformers model
