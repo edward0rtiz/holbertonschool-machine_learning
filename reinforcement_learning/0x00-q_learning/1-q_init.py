@@ -11,9 +11,9 @@ def q_init(env):
         env: is the FrozenLakeEnv instance
     Returns: the Q-table as a numpy.ndarray of zeros
     """
-    action = env.action_space
-    space = env.observation_space.n
+    action = env.action_space.n
+    states = env.observation_space.n
 
-    q_table = np.zeros((action, space))
+    q_table = np.zeros((states, action))
 
     return q_table
