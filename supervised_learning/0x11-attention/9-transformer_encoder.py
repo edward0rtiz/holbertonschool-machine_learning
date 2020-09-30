@@ -39,7 +39,8 @@ class Encoder(tf.keras.layers.Layer):
                 the input to the encoder
             training: boolean to determine if the model is training
             mask: mask to be applied for multi head attention
-        Returns: tensor of shape (batch, input_seq_len, dm) containing the encoder output
+        Returns: tensor of shape (batch, input_seq_len, dm) containing the
+                 encoder output
         """
         seq_len = x.shape[1]
         # adding embedding and position encoding.
