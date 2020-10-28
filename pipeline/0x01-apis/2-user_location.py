@@ -16,5 +16,5 @@ if __name__ == '__main__':
     elif response.status_code == 403:
         limit = response.headers['X-Ratelimit-Reset']
         start = time.time()
-        elapsed = (limit - start) / 60
+        elapsed = int((limit - start) / 60)
         print('Reset in {}'.format(elapsed))
