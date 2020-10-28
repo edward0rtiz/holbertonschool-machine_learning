@@ -17,4 +17,4 @@ if __name__ == '__main__':
         limit = response.headers['X-Ratelimit-Reset']
         start = int(time.time())
         elapsed = int((limit - start) / 60)
-        print('Reset in {} min'.format(elapsed))
+        print('Reset in {} min'.format(int(elapsed)))
