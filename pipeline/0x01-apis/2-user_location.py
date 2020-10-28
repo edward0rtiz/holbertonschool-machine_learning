@@ -15,6 +15,6 @@ if __name__ == '__main__':
         print('Not found')
     if response.status_code == 403:
         limit = response.headers['X-Ratelimit-Reset']
-        start = time.time()
+        start = int(time.time())
         elapsed = int((limit - start) / 60)
         print('Reset in {}'.format(elapsed))
