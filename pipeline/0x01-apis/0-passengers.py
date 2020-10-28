@@ -16,7 +16,7 @@ def availableShips(passengerCount):
                                 headers={'Accept': 'application/json'},
                                 params={"term": 'starships'})
         for ship in response.json()['results']:
-            passenger = ship['passengers']
+            passenger = ship['passengers'].replace(',', '')
             if passenger.isnumeric() and int(passenger) >= passengerCount:
                 starships.append(ship['name'])
         url = response.json()['next']
