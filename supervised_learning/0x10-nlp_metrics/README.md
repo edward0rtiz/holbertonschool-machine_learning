@@ -59,6 +59,6 @@ At the end of this project I was able to solve these conceptual questions:
 ### Try It On Your Machine :computer:
 ```bash
 git clone https://github.com/edward0rtiz/holbertonschool-machine_learning.git
-cd 0x09-transfer_learning
+cd 0x10-nlp_metrics
 ./main_files/[filename.py]
 ```
